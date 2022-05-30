@@ -45,11 +45,11 @@ do
 	
 	-- Try to boot
 	if computer.getBootAddress() then
-		init, reason = loadFrom(computer.getBootAddress())
+		craft, reason = loadFrom(computer.getBootAddress())
 	end
 	
 	-- Error no boot
-	if not init then
+	if not craft then
 		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or ""), 0)
 	end
 end
