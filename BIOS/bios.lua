@@ -1,4 +1,4 @@
-local init
+local craft
 do
 	-- Get component
 	local screen = component.list("screen")()
@@ -40,7 +40,7 @@ do
 			buffer = buffer .. (data or "")
 		until not data
 		boot_invoke(address, "close", handle)
-		return load(buffer, "=init")
+		return load(buffer, "=craft")
 	end
 	
 	-- Try to boot
@@ -54,4 +54,4 @@ do
 	end
 end
 computer.beep(500, 1)
-init()
+craft()
