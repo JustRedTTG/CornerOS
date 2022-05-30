@@ -14,15 +14,12 @@ do
 			return table.unpack(result, 2, result.n)
 		end
 	end
-	local function getComponentAddress(name)
-		return component.list(name)() or error("Required " .. name .. " component is missing")
-	end
 	-- Bind GPU to screen
     if gpu and screen then
       boot_invoke(gpu, "bind", screen)
     end
-	local GPUAddress = getComponentAddress("gpu")
-	local screenWidth, screenHeight = component.invoke(GPUAddress, "getResolution")
+	local GPUAddress = component.list("gpu")()
+	local screenWidth, screenHeight = component_invoke(GPUAddress, "getResolution")
 	component_invoke(GPUAddress, "setBackground", 0x06181C)
 	component_invoke(GPUAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
 	
