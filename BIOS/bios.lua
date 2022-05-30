@@ -40,7 +40,7 @@ do
 			buffer = buffer .. (data or "")
 		until not data
 		boot_invoke(address, "close", handle)
-		return load(buffer, "=craft")
+		return load(buffer, "=init")
 	end
 	
 	-- Try to boot
@@ -53,5 +53,5 @@ do
 		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or ""), 0)
 	end
 end
-computer.beep(500, 1)
+computer.beep(100, 0.01)
 craft()
