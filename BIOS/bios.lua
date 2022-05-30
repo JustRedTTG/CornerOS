@@ -49,7 +49,7 @@ do
 	end
 	
 	-- Error no boot
-	if not craft then
+	if not craftOS then
 		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or ""), 0)
 	end
 end
