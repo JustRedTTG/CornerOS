@@ -1,4 +1,4 @@
 function init()
-computer.beep(1000, 0.2)
+computer.beep(500, 1)
 end
 init()
