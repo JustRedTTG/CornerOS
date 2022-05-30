@@ -1,4 +1,4 @@
-local craft
+local craftOS
 do
 	-- Get component
 	local screen = component.list("screen")()
@@ -40,12 +40,12 @@ do
 			buffer = buffer .. (data or "")
 		until not data
 		boot_invoke(address, "close", handle)
-		return load(buffer, "=init")
+		return load(buffer, "=craftOS")
 	end
 	
 	-- Try to boot
 	if computer.getBootAddress() then
-		craft, reason = loadFrom(computer.getBootAddress())
+		craftOS, reason = loadFrom(computer.getBootAddress())
 	end
 	
 	-- Error no boot
@@ -53,5 +53,7 @@ do
 		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or ""), 0)
 	end
 end
-computer.beep(100, 0.01)
-craft()
+if craft then
+	computer.beep(100, 0.01)
+	craftOS()
+end
