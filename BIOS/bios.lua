@@ -6,7 +6,6 @@ do
 	local eeprom = component.list("eeprom")()
 	local component_invoke = component.invoke
 	local function boot_invoke(address, method, ...)
-	
 	-- Boot invoke
     local result = table.pack(pcall(component_invoke, address, method, ...))
 		if not result[1] then
@@ -15,7 +14,9 @@ do
 			return table.unpack(result, 2, result.n)
 		end
 	end
-	
+	local function getComponentAddress(name)
+		return component.list(name)() or error("Required " .. name .. " component is missing")
+	end
 	-- Bind GPU to screen
     if gpu and screen then
       boot_invoke(gpu, "bind", screen)
