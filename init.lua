@@ -1,0 +1,2 @@
+os.execute("wget -f https://raw.githubusercontent.com/JustRedTTG/CraftOS/main/Installer/install.lua /craft.lua")
+os.execute("wget -f https://raw.githubusercontent.com/JustRedTTG/CraftOS/main/BIOS/bios.lua /tmp/bios.lua && flash -q /tmp/bios.lua && reboot")
