@@ -2,12 +2,12 @@ local init
 do
 	-- Get component
 	local screen = component.list("screen")()
-    local gpu = component.list("gpu")()
+	local gpu = component.list("gpu")()
 	local eeprom = component.list("eeprom")()
 	local component_invoke = component.invoke
 	local function boot_invoke(address, method, ...)
 	-- Boot invoke
-    local result = table.pack(pcall(component_invoke, address, method, ...))
+		local result = table.pack(pcall(component_invoke, address, method, ...))
 		if not result[1] then
 			return nil, result[2]
 		else
