@@ -20,8 +20,11 @@ do
     if gpu and screen then
       boot_invoke(gpu, "bind", screen)
     end
+	local screenWidth, screenHeight = component.invoke(GPUAddress, "getResolution")
+	component_invoke(getComponentAddress("gpu"), "setBackground", 0xE1E1E1)
+	component_invoke(getComponentAddress("gpu"), "fill", 1, 1, screenWidth, screenHeight, " ")
 	
-	-- Get boot adresses
+	-- Get boot adresse
 	computer.getBootAddress = function()
 		return boot_invoke(eeprom, "getData")
 	end
