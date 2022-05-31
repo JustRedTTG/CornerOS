@@ -85,6 +85,9 @@ local function background(color)
 	component.invoke(GPUAddress, "setBackground", color)
 	component.invoke(GPUAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
+local function progress(p)
+
+end
 local function getColor(pallet, color)
 	for i in #pallet do
 		if pallet[i].name == color then
