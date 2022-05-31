@@ -168,7 +168,7 @@ status("Please wait...", config.mainColors.text)
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 while debug do
 	status("Debug Screen", config.mainColors.text)
-	for i in range(0,1,0.0001) do
+	for i in range(0,1,0.05) do
 		progress(i, config)
 		computer.pullSignal()
 	end
