@@ -24,6 +24,9 @@ local addr, invoke = computer.getBootAddress(), component.invoke
 end
 
 -- Internet
+local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
+local installerURL = "Installer"
+
 local function rawRequest(url, chunkHandler)
 	local internetHandle, reason = component.invoke(internetAddress, "request", repositoryURL .. url:gsub("([^%w%-%_%.%~])", function(char)
 		return string.format("%%%02X", string.byte(char))
@@ -78,8 +81,6 @@ end
 component.invoke(GPUAddress, "bind", getComponentAddress("screen"))
 local screenWidth, screenHeight = component.invoke(GPUAddress, "getResolution")
 
-local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
-local installerURL = "Installer"
 
 local function background(color)
 	component.invoke(GPUAddress, "setBackground", color)
