@@ -91,9 +91,15 @@ component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
 local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
 
 -- Drawing functions
-local function background(color)
+local function background(color, color2, color3)
 	component.invoke(gpuAddress, "setBackground", color)
-	component.invoke(gpuAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
+	component.invoke(gpuAddress, "setForeground", color2)
+	component.invoke(gpuAddress, "fill", 1, 1, screenWidth, 1, "-")
+	component.invoke(gpuAddress, "fill", 1, 1, 1, screenHeight, "|")
+	component.invoke(gpuAddress, "setForeground", color3)
+	component.invoke(gpuAddress, "fill", 1, screenHeight, screenWidth, screenHeight, "-")
+	component.invoke(gpuAddress, "fill", screenWidth, 1, screenWidth, screenHeight, "|")
+	component.invoke(gpuAddress, "fill", 2, 2, screenWidth -1, screenHeight -1, " ")
 end
 local function centerOf(width)
 	return math.floor(screenWidth/2 - width/2)
@@ -124,7 +130,7 @@ end
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
-background(config.mainColors.background)
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundLower)
 progress(0.5, config)
 status("Example status", config.mainColors.text)
 while true do
