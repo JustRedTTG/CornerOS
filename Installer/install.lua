@@ -120,16 +120,11 @@ local function progress(p, config)
 	component.invoke(gpuAddress, "setForeground", config.mainColors.backgroundLower)
 	component.invoke(gpuAddress, "set", x + length, y, string.rep("─", width - length))
 end
-local function corner(config)
-	component.invoke(gpuAddress, "setForeground", config.mainColors.backgroundUpper)
-	component.invoke(gpuAddress, "set", 0, 0, string.rep("─", screenWidth))
-end
 
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
 background(config.mainColors.background)
-corner(config)
 progress(0.5, config)
 status("Example status", config.mainColors.text)
 while true do
