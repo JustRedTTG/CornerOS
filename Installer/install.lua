@@ -109,7 +109,7 @@ local function title(textColor)
 	return y + 4
 end
 local function status(text, color)
-	local y = title()
+	local y = title(color)
 	centerText(y, color, text)
 end
 local function progress(p, config)
