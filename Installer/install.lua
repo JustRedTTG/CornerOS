@@ -109,7 +109,8 @@ local function title(textColor)
 	return y + 4
 end
 local function status(text, color)
-	centerText(title(), color, text)
+	local y = title()
+	centerText(y, color, text)
 end
 local function progress(p, config)
 	local width = math.floor(screenWidth/5)
