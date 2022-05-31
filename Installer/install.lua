@@ -98,7 +98,7 @@ local function progress(p)
 
 end
 local function getColor(pallet, color)
-	for i in #pallet do
+	for i in pallet do
 		if pallet[i].name == color then
 			return pallet[i].color
 		end
