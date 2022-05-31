@@ -103,22 +103,22 @@ local function centerText(y, color, text)
 	component.invoke(gpuAddress, "setForeground", color)
 	component.invoke(gpuAddress, "set", centerOf(#text), y, text)
 end
-local function title()
+local function title(textColor)
 	local y = math.floor(screenHeight / 2 - 2)
-	centerText(y, config.mainColors.text, "CornerOS")
+	centerText(y, textColor, "CornerOS")
 	return y + 4
 end
-local function fullProgress()
+local function fullProgress(config)
 	local width = math.floor(screenWidth/5)
-	local x, y = centerOf(width), title()-2
+	local x, y = centerOf(width), title(config.mainColors.text)-2
 	component.invoke(gpuAddress, "setForeground", 0x878787)
 	component.invoke(gpuAddress, "set", x, y, string.rep("─", width))
 	component.invoke(gpuAddress, "setForeground", config.mainColors.progressbarBAD)
 	component.invoke(gpuAddress, "set", x + width, y, string.rep("─", width))
 end
-local function progress(p)
+local function progress(p, config)
 	local width = math.floor(screenWidth/5)
-	local x, y, length = centerOf(width), title()-2, math.ceil(width * p)
+	local x, y, length = centerOf(width), title(config.mainColors.text)-2, math.ceil(width * p)
 	component.invoke(gpuAddress, "setForeground", 0x878787)
 	component.invoke(gpuAddress, "set", x, y, string.rep("─", length))
 	component.invoke(gpuAddress, "setForeground", config.mainColors.progressbarOK)
@@ -126,9 +126,11 @@ local function progress(p)
 end
 
 -- Begin Downloads
-progress(0.5)
 local config = deserialize(request(installerURL .. "config.cfg"))
+--
+fullProgress(config)
 background(config.mainColors.background)
+progress(0.5, config)
 while true do
 
 end
