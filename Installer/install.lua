@@ -129,6 +129,6 @@ end
 progress(0.5)
 local config = deserialize(request(installerURL .. "config.cfg"))
 background(config.mainColors.background)
-while true
+while true do
 
 end
