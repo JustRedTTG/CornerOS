@@ -92,6 +92,8 @@ local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
 
 -- Drawing functions
 local function background(color, color2, color3)
+	component.invoke(gpuAddress, "setBackground", color2)
+	component.invoke(gpuAddress, "fill", 5, 5, 6, 6, " ")
 	component.invoke(gpuAddress, "setBackground", color)
 	component.invoke(gpuAddress, "setForeground", color2)
 	component.invoke(gpuAddress, "fill", 1, 1, screenWidth, 1, "-")
