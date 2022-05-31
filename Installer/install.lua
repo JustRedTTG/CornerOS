@@ -30,6 +30,17 @@ local function deserialize(text)
 		error(reason)
 	end
 end
+local function range(from, to, step)
+  step = step or 1
+  return function(_, lastvalue)
+    local nextvalue = lastvalue + step
+    if step > 0 and nextvalue <= to or step < 0 and nextvalue >= to or
+       step == 0
+    then
+      return nextvalue
+    end
+  end, nil, from - step
+end
 
 -- Internet
 local config
@@ -89,6 +100,7 @@ end
 -- Binding GPU to screen
 component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
 local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
+
 -- Drawing functions
 local function box(color, color2, color3, x, y, sizeX, sizeY, config)
 	component.invoke(gpuAddress, "setBackground", color)
@@ -138,9 +150,16 @@ end
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
+local debug = true
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
-progress(0.5, config)
-status("Example status", config.mainColors.text)
-while true do
+progress(0, config)
+status("Please wait...", config.mainColors.text)
+
+
+while debug do
+	status("Debug Screen", config.mainColors.text)
+	for i in range(0,1,0.05) do
+		progress(i, config)
+	end
 	computer.pullSignal()
 end
