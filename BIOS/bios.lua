@@ -16,11 +16,11 @@ do
 	end
 	-- Bind GPU to screen
     if gpu and screen then
-      boot_invoke(gpu, "bind", screen)
+		boot_invoke(gpu, "bind", screen)
+		local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
+		component_invoke(gpu, "setBackground", 0x06181C)
+		component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
     end
-	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
-	component_invoke(gpu, "setBackground", 0x06181C)
-	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	
 	-- Get boot adress
 	computer.getBootAddress = function()
