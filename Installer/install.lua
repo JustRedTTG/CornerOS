@@ -92,8 +92,6 @@ local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
 
 -- Drawing functions
 local function background(color, color2, color3)
-	component.invoke(gpuAddress, "setBackground", color2)
-	component.invoke(gpuAddress, "fill", 5, 5, 6, 6, " ")
 	component.invoke(gpuAddress, "setBackground", color)
 	component.invoke(gpuAddress, "setForeground", color2)
 	component.invoke(gpuAddress, "fill", 1, 1, screenWidth, 1, "-")
@@ -101,13 +99,13 @@ local function background(color, color2, color3)
 	component.invoke(gpuAddress, "setForeground", color3)
 	component.invoke(gpuAddress, "fill", 1, screenHeight -1, screenWidth, screenHeight, "-")
 	component.invoke(gpuAddress, "fill", screenWidth, 1, screenWidth, screenHeight, "|")
-	component.invoke(gpuAddress, "fill", 2, 2, screenWidth -1, screenHeight -1, " ")
+	component.invoke(gpuAddress, "fill", 2, 2, screenWidth -2, screenHeight -2, " ")
 end
 local function centerOf(width)
 	return math.floor(screenWidth/2 - width/2)
 end
 local function centerText(y, color, text)
-	component.invoke(gpuAddress, "fill", centerOf(#text) , y, centerOf(#text)+#text, 1, " ")
+	component.invoke(gpuAddress, "fill", centerOf(#text) , y, #text, 1, " ")
 	component.invoke(gpuAddress, "setForeground", color)
 	component.invoke(gpuAddress, "set", centerOf(#text), y, text)
 end
