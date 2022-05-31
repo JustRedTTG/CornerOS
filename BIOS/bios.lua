@@ -28,7 +28,7 @@ do
 	end
 	local reason2
 	local function loadFrom(address)
-		local handle, reason = boot_invoke(addre0ss, "open", "/craft.lua")
+		local handle, reason = boot_invoke(address, "open", "/craft.lua")
 		if not handle then
 			reason2 = "opening File"
 			return nil, reason
