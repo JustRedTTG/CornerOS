@@ -109,4 +109,4 @@ end
 -- Begin download
 progress(0)
 local config = deserialize(request(installerURL .. "config.cfg"))
-background(getColor(config.mainColors, "background"))
+background(getColor(#config.mainColors, "background"))
