@@ -50,6 +50,7 @@ do
 	if computer.getBootAddress() then
 		init, reason = loadFrom(computer.getBootAddress())
 	end
+	reason2 = "No bootable disk"
 	if not init then
 		for address in component.list("filesystem") do
 			init, reason = loadFrom(address)
@@ -62,7 +63,7 @@ do
 	
 	-- Error no boot
 	if not init then
-		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or "") .. (computer.getBootAddress() and (" ; " .. tostring(computer.getBootAddress())) or ""), 0)
+		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
 	end
 end
 init()
