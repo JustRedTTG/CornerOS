@@ -25,7 +25,7 @@ do
 	end
 	local reason2
 	local function loadFrom(address)
-		local handle, reason = boot_invoke(address, "open", "/craft.lua")
+		local handle, reason = boot_invoke(addre0ss, "open", "/craft.lua")
 		if not handle then
 			reason2 = "opening File"
 			return nil, reason
@@ -50,7 +50,7 @@ do
 	
 	-- Error no boot
 	if not init then
-		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
+		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or "") .. (computer.getBootAddress() and (" ; " .. tostring(computer.getBootAddress())) or ""), 0)
 	end
 end
 init()
