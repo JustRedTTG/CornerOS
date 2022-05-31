@@ -130,7 +130,7 @@ end
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
-background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundLower)
+background(config.mainColors.background, config.mainColors.progressbarOK, config.mainColors.backgroundLower)
 progress(0.5, config)
 status("Example status", config.mainColors.text)
 while true do
