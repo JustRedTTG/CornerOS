@@ -16,3 +16,7 @@ local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CraftOS/main
 
 component.invoke(GPUAddress, "setBackground", 0xE1E1E1)
 component.invoke(GPUAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
+
+while true do
+
+end
