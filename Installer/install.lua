@@ -1,4 +1,3 @@
-computer.shutdown(true)
 -- Get ALL components
 local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
