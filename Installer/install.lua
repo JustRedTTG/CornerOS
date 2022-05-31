@@ -3,7 +3,7 @@ local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
 end
 
-local EEPROMAddress, internetAddress, GPUAddress = 
+local EEPROMAddress, internetAddress, gpuAddress = 
 	getComponentAddress("eeprom"),
 	getComponentAddress("internet"),
 	getComponentAddress("gpu")
@@ -32,6 +32,7 @@ local function deserialize(text)
 end
 
 -- Internet
+local config
 local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
 local installerURL = "Installer/"
 
@@ -86,28 +87,48 @@ local function download(url, path)
 end
 
 -- Binding GPU to screen
-component.invoke(GPUAddress, "bind", getComponentAddress("screen"))
-local screenWidth, screenHeight = component.invoke(GPUAddress, "getResolution")
+component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
+local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
 
-
+-- Drawing functions
 local function background(color)
-	component.invoke(GPUAddress, "setBackground", color)
-	component.invoke(GPUAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
+	component.invoke(gpuAddress, "setBackground", color)
+	component.invoke(gpuAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
-background(0xFFFFFF)
+local function centerOf(width)
+	return math.floor(screenWidth/2 - width/2)
+end
+local function centerText(y, color, text)
+	component.invoke(gpuAddress, "fill", 1, y, screenWidth, 1, " ")
+	component.invoke(gpuAddress, "setForeground", color)
+	component.invoke(gpuAddress, "set", centerOf(#text), y, text)
+end
+local function title()
+	local y = math.floor(screenHeight / 2 - 2)
+	centerText(y, config.mainColors.text, "CornerOS")
+	return y + 4
+end
+local function fullProgress()
+	local width = math.floor(screenWidth/5)
+	local x, y = centerOf(width), title()-2
+	component.invoke(gpuAddress, "setForeground", 0x878787)
+	component.invoke(gpuAddress, "set", x, y, string.rep("─", width))
+	component.invoke(gpuAddress, "setForeground", config.mainColors.progressbarBAD)
+	component.invoke(gpuAddress, "set", x + width, y, string.rep("─", width))
+end
 local function progress(p)
-
-end
-local function getColor(pallet, color)
-	for i in pallet do
-		if pallet[i].name == color then
-			return pallet[i].color
-		end
-	end
-	return nil
+	local width = math.floor(screenWidth/5)
+	local x, y, length = centerOf(width), title()-2, math.ceil(width * p)
+	component.invoke(gpuAddress, "setForeground", 0x878787)
+	component.invoke(gpuAddress, "set", x, y, string.rep("─", length))
+	component.invoke(gpuAddress, "setForeground", config.mainColors.progressbarOK)
+	component.invoke(gpuAddress, "set", x + length, y, string.rep("─", width - length))
 end
 
--- Begin download
-progress(0)
+-- Begin Downloads
+progress(0.5)
 local config = deserialize(request(installerURL .. "config.cfg"))
 background(config.mainColors.background)
+while true
+
+end
