@@ -52,6 +52,7 @@ do
 	end
 	reason2 = "No bootable disk"
 	if not init then
+		computer.setBootAddress()
 		for address in component.list("filesystem") do
 			init, reason = loadFrom(address)
 			if init then
