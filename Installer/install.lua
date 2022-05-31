@@ -25,7 +25,7 @@ end
 
 -- Internet
 local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
-local installerURL = "Installer"
+local installerURL = "Installer/"
 
 local function rawRequest(url, chunkHandler)
 	local internetHandle, reason = component.invoke(internetAddress, "request", repositoryURL .. url:gsub("([^%w%-%_%.%~])", function(char)
