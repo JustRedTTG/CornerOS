@@ -97,13 +97,13 @@ local function box(color, color2, color3, x, y, sizeX, sizeY)
 	component.invoke(gpuAddress, "fill", x, y, 1, sizeY, "|")
 	
 	component.invoke(gpuAddress, "set", x, y, "╭")
-	component.invoke(gpuAddress, "set", x, y+sizeY-1, "╰")
+	component.invoke(gpuAddress, "set", x, y+sizeY, "╰")
 	component.invoke(gpuAddress, "setForeground", color3)
-	component.invoke(gpuAddress, "fill", x+1, sizeY, sizeX-1, 1, "-")
-	component.invoke(gpuAddress, "fill", sizeX, y+1, 1, sizeY-1, "|")
+	component.invoke(gpuAddress, "fill", x+1, y+sizeY, sizeX-1, 1, "-")
+	component.invoke(gpuAddress, "fill", x+sizeX, y+1, 1, sizeY-1, "|")
 	
-	component.invoke(gpuAddress, "set", x+sizeX-1, y, "╮")
-	component.invoke(gpuAddress, "set", x+sizeX-1, y+sizeY-1, "╯")
+	component.invoke(gpuAddress, "set", x+sizeX, y, "╮")
+	component.invoke(gpuAddress, "set", x+sizeX, y+sizeY, "╯")
 end
 local function background(color, color2, color3)
 	box(color, color2, color3, 1, 1, screenWidth, screenHeight)
@@ -143,5 +143,5 @@ background(config.mainColors.background, config.mainColors.backgroundUpper, conf
 progress(0.5, config)
 status("Example status", config.mainColors.text)
 while true do
-
+	computer.pullSignal()
 end
