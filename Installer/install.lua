@@ -30,16 +30,25 @@ local function deserialize(text)
 		error(reason)
 	end
 end
-local function range(from, to, step)
+function range(a, b, step)
+  if not b then
+    b = a
+    a = 1
+  end
   step = step or 1
-  return function(_, lastvalue)
-    local nextvalue = lastvalue + step
-    if step > 0 and nextvalue <= to or step < 0 and nextvalue >= to or
-       step == 0
-    then
-      return nextvalue
-    end
-  end, nil, from - step
+  local f =
+    step > 0 and
+      function(_, lastvalue)
+        local nextvalue = lastvalue + step
+        if nextvalue <= b then return nextvalue end
+      end or
+    step < 0 and
+      function(_, lastvalue)
+        local nextvalue = lastvalue + step
+        if nextvalue >= b then return nextvalue end
+      end or
+      function(_, lastvalue) return lastvalue end
+  return f, nil, a - step
 end
 
 -- Internet
@@ -163,5 +172,4 @@ while debug do
 		progress(i, config)
 		computer.pullSignal()
 	end
-	computer.pullSignal()
 end
