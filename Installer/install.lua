@@ -22,6 +22,14 @@ local addr, invoke = computer.getBootAddress(), component.invoke
     return load(buffer, "=" .. file, "bt", _G)
   end
 end
+local function deserialize(text)
+	local result, reason = load("return " .. text, "=string")
+	if result then
+		return result()
+	else
+		error(reason)
+	end
+end
 
 -- Internet
 local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
