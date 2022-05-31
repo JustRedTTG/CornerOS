@@ -17,6 +17,9 @@ do
 	-- Bind GPU to screen
     if gpu and screen then
 		boot_invoke(gpu, "bind", screen)
+		local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
+		component_invoke(gpu, "setBackground", 0x06181C)
+		component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
     end
 	
 	-- Get boot adress
@@ -28,7 +31,7 @@ do
 	end
 	local reason2
 	local function loadFrom(address)
-		local handle, reason = boot_invoke(address, "open", "/craft.lua")
+		local handle, reason = boot_invoke(address, "open", "/corner.lua")
 		if not handle then
 			reason2 = "opening File"
 			return nil, reason
