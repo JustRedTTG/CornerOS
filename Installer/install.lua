@@ -18,6 +18,5 @@ component.invoke(GPUAddress, "setBackground", 0xE1E1E1)
 component.invoke(GPUAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
 
 while true do
-os.queueEvent("randomEvent")
-os.pullEvent()
+computer.pullSignal()
 end
