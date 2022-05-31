@@ -94,6 +94,7 @@ local function background(color)
 	component.invoke(GPUAddress, "setBackground", color)
 	component.invoke(GPUAddress, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
+background(0xFFFFFF)
 local function progress(p)
 
 end
@@ -109,4 +110,4 @@ end
 -- Begin download
 progress(0)
 local config = deserialize(request(installerURL .. "config.cfg"))
-background(getColor(#config.mainColors, "background"))
+background(config.mainColors.background)
