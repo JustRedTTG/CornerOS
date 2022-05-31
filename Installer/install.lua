@@ -90,23 +90,23 @@ end
 component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
 local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
 -- Drawing functions
-local function box(color, color2, color3, x, y, sizeX, sizeY)
+local function box(color, color2, color3, x, y, sizeX, sizeY, config)
 	component.invoke(gpuAddress, "setBackground", color)
 	component.invoke(gpuAddress, "setForeground", color2)
-	component.invoke(gpuAddress, "fill", x, y, sizeX, 1, "─")
-	component.invoke(gpuAddress, "fill", x, y, 1, sizeY, "│")
+	component.invoke(gpuAddress, "fill", x, y, sizeX, 1, config.mainCharacters.boxHorizontal)
+	component.invoke(gpuAddress, "fill", x, y, 1, sizeY, config.mainCharacters.boxVertical)
 	
-	component.invoke(gpuAddress, "set", x, y, "╭")
-	component.invoke(gpuAddress, "set", x, y+sizeY-1, "╰")
+	component.invoke(gpuAddress, "set", x, y, config.mainCharacters.boxTopLeft)
+	component.invoke(gpuAddress, "set", x, y+sizeY-1, config.mainCharacters.boxBottomLeft)
 	component.invoke(gpuAddress, "setForeground", color3)
-	component.invoke(gpuAddress, "fill", x+1, y+sizeY-1, sizeX-1, 1, "─")
-	component.invoke(gpuAddress, "fill", x+sizeX-1, y+1, 1, sizeY-1, "│")
+	component.invoke(gpuAddress, "fill", x+1, y+sizeY-1, sizeX-1, 1, config.mainCharacters.boxHorizontal)
+	component.invoke(gpuAddress, "fill", x+sizeX-1, y+1, 1, sizeY-1, config.mainCharacters.boxVertical)
 	
-	component.invoke(gpuAddress, "set", x+sizeX-1, y, "╮")
-	component.invoke(gpuAddress, "set", x+sizeX-1, y+sizeY-1, "╯")
+	component.invoke(gpuAddress, "set", x+sizeX-1, y, config.mainCharacters.boxTopRight)
+	component.invoke(gpuAddress, "set", x+sizeX-1, y+sizeY-1, config.mainCharacters.boxBottomRight)
 end
-local function background(color, color2, color3)
-	box(color, color2, color3, 1, 1, screenWidth, screenHeight)
+local function background(color, color2, color3, config)
+	box(color, color2, color3, 1, 1, screenWidth, screenHeight, config)
 	component.invoke(gpuAddress, "fill", 2, 2, screenWidth -2, screenHeight -2, " ")
 end
 local function centerOf(width)
@@ -138,7 +138,7 @@ end
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
-background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange)
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 progress(0.5, config)
 status("Example status", config.mainColors.text)
 while true do
