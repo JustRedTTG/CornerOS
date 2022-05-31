@@ -23,6 +23,9 @@ do
 	computer.getBootAddress = function()
 		return boot_invoke(eeprom, "getData")
 	end
+	computer.setBootAddress = function(address)
+		return boot_invoke(eeprom, "setData", address)
+	end
 	local reason2
 	local function loadFrom(address)
 		local handle, reason = boot_invoke(addre0ss, "open", "/craft.lua")
@@ -46,6 +49,15 @@ do
 	-- Try to boot
 	if computer.getBootAddress() then
 		init, reason = loadFrom(computer.getBootAddress())
+	end
+	if not init then
+		for address in component.list("filesystem") do
+			init, reason = loadFrom(address)
+			if init then
+				computer.setBootAddress(address)
+				break
+			end
+		end
 	end
 	
 	-- Error no boot
