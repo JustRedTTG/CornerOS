@@ -50,7 +50,7 @@ do
 	
 	-- Error no boot
 	if not init then
-		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
+		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
 	end
 end
 init()
