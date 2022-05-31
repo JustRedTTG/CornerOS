@@ -23,16 +23,18 @@ do
 	computer.getBootAddress = function()
 		return boot_invoke(eeprom, "getData")
 	end
-	
+	local reason2
 	local function loadFrom(address)
 		local handle, reason = boot_invoke(address, "open", "/craft.lua")
 		if not handle then
+			reason2 = "opening File"
 			return nil, reason
 		end
 		local buffer = ""
 		repeat
 			local data, reason = boot_invoke(address, "read", handle, math.huge)
 			if not data and reason then
+				reason2 = "reading file"
 				return nil, reason
 			end
 			buffer = buffer .. (data or "")
@@ -48,7 +50,7 @@ do
 	
 	-- Error no boot
 	if not init then
-		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or ""), 0)
+		error("Couldn't find bootable disk." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
 	end
 end
 init()
