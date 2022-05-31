@@ -89,21 +89,24 @@ end
 -- Binding GPU to screen
 component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
 local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
-
 -- Drawing functions
-local function background(color, color2, color3)
+local function box(color, color2, color3, x, y, sizeX, sizeY)
 	component.invoke(gpuAddress, "setBackground", color)
 	component.invoke(gpuAddress, "setForeground", color2)
-	component.invoke(gpuAddress, "fill", 1, 1, screenWidth, 1, "-")
-	component.invoke(gpuAddress, "fill", 1, 1, 1, screenHeight, "|")
-	component.invoke(gpuAddress, "set", 1, 1, "╭")
-	component.invoke(gpuAddress, "set", 1, screenHeight, "╰")
+	component.invoke(gpuAddress, "fill", x, y, sizeX, y, "-")
+	component.invoke(gpuAddress, "fill", x, y, x, sizeY, "|")
+	component.invoke(gpuAddress, "set", x, y, "╭")
+	component.invoke(gpuAddress, "set", x, y+sizeY, "╰")
 	component.invoke(gpuAddress, "setForeground", color3)
-	component.invoke(gpuAddress, "fill", 2, screenHeight, screenWidth, 1, "-")
-	component.invoke(gpuAddress, "fill", screenWidth, 2, 1, screenHeight, "|")
-	component.invoke(gpuAddress, "set", screenWidth, 1, "╮")
-	component.invoke(gpuAddress, "set", screenWidth, screenHeight, "╯")
+	component.invoke(gpuAddress, "fill", x+1, sizeY, sizeX-1, 1, "-")
+	component.invoke(gpuAddress, "fill", sizeX, y+1, 1, sizeY-1, "|")
+	component.invoke(gpuAddress, "set", x+sizeX, y, "╮")
+	component.invoke(gpuAddress, "set", x+sizeX, y+sizeY, "╯")
+end
+local function background(color, color2, color3)
+	box(color, color2, color3, 1, 1, screenWidth, screenHeight)
 	component.invoke(gpuAddress, "fill", 2, 2, screenWidth -2, screenHeight -2, " ")
+	box(color, color2, color3, 5, 5, 3, 3)
 end
 local function centerOf(width)
 	return math.floor(screenWidth/2 - width/2)
@@ -134,7 +137,7 @@ end
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
-background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundLower)
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange)
 progress(0.5, config)
 status("Example status", config.mainColors.text)
 while true do
