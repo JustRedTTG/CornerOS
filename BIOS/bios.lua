@@ -30,8 +30,8 @@ do
 		return boot_invoke(eeprom, "setData", address)
 	end
 	local reason2
-	local function loadFrom(address)
-		local handle, reason = boot_invoke(address, "open", "/corner.lua")
+	local function loadFrom(address, loadAddr)
+		local handle, reason = boot_invoke(address, "open", loadAddr)
 		if not handle then
 			reason2 = "opening File"
 			return nil, reason
@@ -51,7 +51,10 @@ do
 	
 	-- Try to boot
 	if computer.getBootAddress() then
-		init, reason = loadFrom(computer.getBootAddress())
+		init, reason = loadFrom(computer.getBootAddress(), "/corner.lua")
+		if not init then
+			init, reason = loadFrom(computer.getBootAddress(), "/init.lua")
+		end
 	end
 	reason2 = "No bootable disk"
 	if not init then
