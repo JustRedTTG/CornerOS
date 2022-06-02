@@ -13,6 +13,7 @@ local EEPROMAddress, internetAddress, gpuAddress =
 	getComponentAddress("gpu")
 
 -- Get Ready ~
+local filesystemProxy = component.invoke(EEPROMAddress, "getData")
 do
 local addr, invoke = computer.getBootAddress(), component.invoke
 	local function loadfile(file)
@@ -76,15 +77,15 @@ local function request(url)
 	return data
 end
 local function download(url, path)
-	selectedFilesystemProxy.makeDirectory(filesystemPath(path))
+	filesystemProxy.makeDirectory(filesystemPath(path))
 
-	local fileHandle, reason = selectedFilesystemProxy.open(path, "wb")
+	local fileHandle, reason = filesystemProxy.open(path, "wb")
 	if fileHandle then	
 		rawRequest(url, function(chunk)
-			selectedFilesystemProxy.write(fileHandle, chunk)
+			filesystemProxy.write(fileHandle, chunk)
 		end)
 
-		selectedFilesystemProxy.close(fileHandle)
+		filesystemProxy.close(fileHandle)
 	else
 		error("File opening failed: " .. tostring(reason))
 	end
