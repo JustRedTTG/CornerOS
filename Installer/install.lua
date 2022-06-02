@@ -158,3 +158,6 @@ if debug then
 	until needWait == "key_down" or needWait == "touch"
 end
 
+
+
+download(installerURL .. "config.cfg", "/config.cfg")
