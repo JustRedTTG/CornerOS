@@ -81,7 +81,7 @@ end
 
 -- Binding GPU to screen
 if gpu then
-	local gpu = component.proxy(gpuAdress)
+	local gpu = component.proxy(gpu)
 	screenWidth, screenHeight = gpu.maxResolution()
 	gpu.setResolution(screenWidth, screenHeight)
 	gpu = component.proxy(gpu)
