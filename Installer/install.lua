@@ -94,8 +94,9 @@ end
 -- Binding GPU to screen
 if gpu and screen then -- screen
 	component.invoke(gpuAddress, "bind", screen)
-	screenWidth, screenHeight = component.invoke(gpuAdress, "maxResolution")
-	component.invoke(gpuAddress, "setResolution", screenWidth, screenHeight)
+	local gpu = component.proxy(gpuAdress)
+	screenWidth, screenHeight = gpu.maxResolution()
+	gpu.setResolution(screenWidth, screenHeight)
 end
 
 -- Drawing functions
