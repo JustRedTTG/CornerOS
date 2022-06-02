@@ -8,25 +8,13 @@ local function getComponentAddress(name)
 end
 
 local screenWidth, screenHeight
-local EEPROMAddress, internetAddress, gpuAddress, screen = 
+local EEPROMAddress, internetAddress = 
 	getComponentAddress("eeprom"),
 	getComponentAddress("internet")
 local screen = component.list("screen", true)()
 local gpu = screen and component.list("gpu", true)()
 
 -- Get Ready ~
-do
-	local function loadfile(file)
-    local handle = assert(invoke(addr, "open", file))
-    local buffer = ""
-    repeat
-      local data = invoke(addr, "read", handle, math.huge)
-      buffer = buffer .. (data or "")
-    until not data
-    invoke(addr, "close", handle)
-    return load(buffer, "=" .. file, "bt", _G)
-  end
-end
 local function deserialize(text)
 	local result, reason = load("return " .. text, "=string")
 	if result then
@@ -92,7 +80,7 @@ local function download(url, path)
 end
 
 -- Binding GPU to screen
-if gpu then -- screen
+if gpu then
 	local gpu = component.proxy(gpuAdress)
 	screenWidth, screenHeight = gpu.maxResolution()
 	gpu.setResolution(screenWidth, screenHeight)
@@ -100,8 +88,8 @@ if gpu then -- screen
 	if not gpu.getScreen() then
 		gpu.bind(screen)
 	end
-  screenWidth, screenHeight = gpu.maxResolution()
-  gpu.setResolution(screenWidth, screenHeight)
+	screenWidth, screenHeight = gpu.maxResolution()
+	gpu.setResolution(screenWidth, screenHeight)
 end
 
 -- Drawing functions
