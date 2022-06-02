@@ -1,17 +1,22 @@
 -- Get ALL components
+local component = component
+local computer = computer
+local unicode = unicode
+
 local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
 end
 
-local EEPROMAddress, internetAddress, gpuAddress = 
+local screenWidth, screenHeight
+local EEPROMAddress, internetAddress, gpuAddress, screen = 
 	getComponentAddress("eeprom"),
 	getComponentAddress("internet"),
-	getComponentAddress("gpu")
+	getComponentAddress("gpu"),
+	getComponentAddress("screen")
 
 -- Get Ready ~
 do
-local addr, invoke = computer.getBootAddress(), component.invoke
-  local function loadfile(file)
+	local function loadfile(file)
     local handle = assert(invoke(addr, "open", file))
     local buffer = ""
     repeat
@@ -87,8 +92,11 @@ local function download(url, path)
 end
 
 -- Binding GPU to screen
-component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
-local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
+if gpu and screen then -- screen
+	component.invoke(gpuAddress, "bind", screen)
+	screenWidth, screenHeight = component.invoke(gpuAdress, "maxResolution")
+	component.invoke(gpuAddress, "setResolution", screenWidth, screenHeight)
+end
 
 -- Drawing functions
 local function box(color, color2, color3, x, y, sizeX, sizeY, config)
@@ -153,3 +161,4 @@ if debug then
 		needWait = computer.pullSignal()
 	until needWait == "key_down" or needWait == "touch"
 end
+
