@@ -7,14 +7,25 @@ local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
 end
 
-local screenWidth, screenHeight
-local EEPROMAddress, internetAddress = 
+local EEPROMAddress, internetAddress, gpuAddress = 
 	getComponentAddress("eeprom"),
-	getComponentAddress("internet")
-local screen = component.list("screen", true)()
-local gpu = component.list("gpu", true)()
+	getComponentAddress("internet"),
+	getComponentAddress("gpu")
 
 -- Get Ready ~
+do
+local addr, invoke = computer.getBootAddress(), component.invoke
+	local function loadfile(file)
+    local handle = assert(invoke(addr, "open", file))
+    local buffer = ""
+    repeat
+      local data = invoke(addr, "read", handle, math.huge)
+      buffer = buffer .. (data or "")
+    until not data
+    invoke(addr, "close", handle)
+    return load(buffer, "=" .. file, "bt", _G)
+  end
+end
 local function deserialize(text)
 	local result, reason = load("return " .. text, "=string")
 	if result then
@@ -80,45 +91,36 @@ local function download(url, path)
 end
 
 -- Binding GPU to screen
-if gpu and screen then
-	gpu = component.proxy(gpu)
-	screenWidth, screenHeight = gpu.maxResolution()
-	gpu.setResolution(screenWidth, screenHeight)
-	gpu = component.proxy(gpu)
-	if not gpu.getScreen() then
-		gpu.bind(screen)
-	end
-	screenWidth, screenHeight = gpu.maxResolution()
-	gpu.setResolution(screenWidth, screenHeight)
-end
+component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
+local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
 
 -- Drawing functions
 local function box(color, color2, color3, x, y, sizeX, sizeY, config)
-	gpu.setBackground(color)
-	gpu.setForeground(color2)
-	gpu.fill( x, y, sizeX, 1, config.mainCharacters.boxHorizontal)
-	gpu.fill( x, y, 1, sizeY, config.mainCharacters.boxVertical)
+	component.invoke(gpuAddress, "setBackground", color)
+	component.invoke(gpuAddress, "setForeground", color2)
+	component.invoke(gpuAddress, "fill", x, y, sizeX, 1, config.mainCharacters.boxHorizontal)
+	component.invoke(gpuAddress, "fill", x, y, 1, sizeY, config.mainCharacters.boxVertical)
 	
-	gpu.set( x, y, config.mainCharacters.boxTopLeft)
-	gpu.set( x, y+sizeY-1, config.mainCharacters.boxBottomLeft)
-	gpu.setForeground(color3)
-	gpu.fill( x+1, y+sizeY-1, sizeX-1, 1, config.mainCharacters.boxHorizontal)
-	gpu.fill( x+sizeX-1, y+1, 1, sizeY-1, config.mainCharacters.boxVertical)
+	component.invoke(gpuAddress, "set", x, y, config.mainCharacters.boxTopLeft)
+	component.invoke(gpuAddress, "set", x, y+sizeY-1, config.mainCharacters.boxBottomLeft)
+	component.invoke(gpuAddress, "setForeground", color3)
+	component.invoke(gpuAddress, "fill", x+1, y+sizeY-1, sizeX-1, 1, config.mainCharacters.boxHorizontal)
+	component.invoke(gpuAddress, "fill", x+sizeX-1, y+1, 1, sizeY-1, config.mainCharacters.boxVertical)
 	
-	gpu.set( x+sizeX-1, y, config.mainCharacters.boxTopRight)
-	gpu.set( x+sizeX-1, y+sizeY-1, config.mainCharacters.boxBottomRight)
+	component.invoke(gpuAddress, "set", x+sizeX-1, y, config.mainCharacters.boxTopRight)
+	component.invoke(gpuAddress, "set", x+sizeX-1, y+sizeY-1, config.mainCharacters.boxBottomRight)
 end
 local function background(color, color2, color3, config)
 	box(color, color2, color3, 1, 1, screenWidth, screenHeight, config)
-	gpu.fill( 2, 2, screenWidth -2, screenHeight -2, " ")
+	component.invoke(gpuAddress, "fill", 2, 2, screenWidth -2, screenHeight -2, " ")
 end
 local function centerOf(width)
 	return math.floor(screenWidth/2 - width/2)
 end
 local function centerText(y, color, text)
-	gpu.fill( centerOf(#text) , y, #text, 1, " ")
-	gpu.setForeground(color)
-	gpu.set( centerOf(#text), y, text)
+	component.invoke(gpuAddress, "fill", centerOf(#text) , y, #text, 1, " ")
+	component.invoke(gpuAddress, "setForeground", color)
+	component.invoke(gpuAddress, "set", centerOf(#text), y, text)
 end
 local function title(textColor)
 	local y = math.floor(screenHeight / 2 - 2)
@@ -132,10 +134,10 @@ end
 local function progress(p, config)
 	local width = math.floor(screenWidth/5)
 	local x, y, length = centerOf(width), title(config.mainColors.text)-2, math.ceil(width * p)
-	gpu.setForeground(config.mainColors.progressbarOK)
-	gpu.set( x, y, string.rep("─", length))
-	gpu.setForeground(config.mainColors.backgroundLower)
-	gpu.set( x + length, y, string.rep("─", width - length))
+	component.invoke(gpuAddress, "setForeground", config.mainColors.progressbarOK)
+	component.invoke(gpuAddress, "set", x, y, string.rep("─", length))
+	component.invoke(gpuAddress, "setForeground", config.mainColors.backgroundLower)
+	component.invoke(gpuAddress, "set", x + length, y, string.rep("─", width - length))
 end
 
 -- Begin Downloads
