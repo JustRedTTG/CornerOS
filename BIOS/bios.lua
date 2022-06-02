@@ -60,7 +60,10 @@ do
 	if not init then
 		computer.setBootAddress()
 		for address in component.list("filesystem") do
-			init, reason = loadFrom(address)
+			init, reason = loadFrom(address, "/corner.lua")
+			if not init then
+				init, reason = loadFrom(address, "/init.lua")
+			end
 			if init then
 				computer.setBootAddress(address)
 				break
