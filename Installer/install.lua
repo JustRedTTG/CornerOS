@@ -13,7 +13,7 @@ local EEPROMAddress, internetAddress, gpuAddress =
 	getComponentAddress("gpu")
 
 -- Get Ready ~
-local filesystemProxy = component.invoke(EEPROMAddress, "getData")
+local filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
 do
 local addr, invoke = computer.getBootAddress(), component.invoke
 	local function loadfile(file)
