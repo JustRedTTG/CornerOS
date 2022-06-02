@@ -35,6 +35,9 @@ local function deserialize(text)
 		error(reason)
 	end
 end
+local function filesystemPath(path)
+	return path:match("^(.+%/).") or ""
+end
 
 -- Internet
 local config
