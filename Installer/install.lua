@@ -12,7 +12,7 @@ local EEPROMAddress, internetAddress =
 	getComponentAddress("eeprom"),
 	getComponentAddress("internet")
 local screen = component.list("screen", true)()
-local gpu = screen and component.list("gpu", true)()
+local gpu = component.list("gpu", true)()
 
 -- Get Ready ~
 local function deserialize(text)
@@ -80,8 +80,8 @@ local function download(url, path)
 end
 
 -- Binding GPU to screen
-if gpu then
-	local gpu = component.proxy(gpu)
+if gpu and screen then
+	gpu = component.proxy(gpu)
 	screenWidth, screenHeight = gpu.maxResolution()
 	gpu.setResolution(screenWidth, screenHeight)
 	gpu = component.proxy(gpu)
