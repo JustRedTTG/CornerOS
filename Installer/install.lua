@@ -14,7 +14,7 @@ local EEPROMAddress, internetAddress, gpuAddress =
 
 -- Get Ready ~
 local installerDir = "/download/"
-local installDir = "/mnt/1cd/"
+local installDir = "/"
 
 local filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
 
@@ -236,6 +236,9 @@ end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 status("Copying files...", config.mainColors.text)
+
+--filesystemProxy.remove(installDir .. "lib")
+
 local total = #config.libs + #config.bios
 for i = 1, #config.libs do
 	progress(i / total, config)
@@ -243,7 +246,7 @@ for i = 1, #config.libs do
 end
 
 for i = 1, #config.bios do
-	progress((#config.libs)+i / total, config)
+	progress((#config.libs)+i-1 / total, config)
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
 filesystemProxy.remove(installerDir)
