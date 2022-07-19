@@ -21,7 +21,7 @@ if gpu and screen then
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
 
-local function error(message)
+local function computer.error(message)
 	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
 	component_invoke(gpu, "setBackground", 0x180d21)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
