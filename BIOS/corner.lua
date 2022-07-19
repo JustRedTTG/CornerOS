@@ -71,7 +71,7 @@ function require(module)
 end
 
 
-GUI = require("/lib/GUI.lua")
+error = require("/lib/error.lua").error
 
 error("LOL")
 

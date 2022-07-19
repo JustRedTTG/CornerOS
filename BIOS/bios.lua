@@ -87,9 +87,6 @@ do
 	-- Error no boot
 	if not init then
 		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
-		
-	else
-		init.error = error
 	end
 computer.beep(500, 0.2)
 end
