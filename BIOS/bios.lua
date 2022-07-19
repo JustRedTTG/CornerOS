@@ -1,19 +1,16 @@
-local pre_init
-do
-	-- Get component
-	local screen = component.list("screen")()
-	local gpu = component.list("gpu")()
-	local eeprom = component.list("eeprom")()
-	local component_invoke = component.invoke
-	local function boot_invoke(address, method, ...)
-	
-	-- Bind GPU to screen
-    if gpu and screen then
-		boot_invoke(gpu, "bind", screen)
-		local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
-		component_invoke(gpu, "setBackground", 0x000000)
-		component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
-    end
+-- Get component
+local screen = component.list("screen")()
+local gpu = component.list("gpu")()
+local eeprom = component.list("eeprom")()
+local component_invoke = component.invoke
+local function boot_invoke(address, method, ...)
+
+-- Bind GPU to screen
+if gpu and screen then
+	boot_invoke(gpu, "bind", screen)
+	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
+	component_invoke(gpu, "setBackground", 0x000000)
+	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
 
 local function error(message)
@@ -89,7 +86,5 @@ do
 	end
 computer.beep(500, 0.2)
 end
-
-pre_init()
 
 init()
