@@ -17,7 +17,7 @@ local installerDir = "/download/"
 local installDir = "/mnt/1cd/"
 
 local filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
-local installProxy = component.proxy(installDir)
+
 do
 local addr, invoke = computer.getBootAddress(), component.invoke
 	local function loadfile(file)
@@ -139,11 +139,11 @@ local function copy_file(from, to)
 	installProxy.makeDirectory(filesystemPath(to))
 
 	local fileHandle, reason = filesystemProxy.open(path, "rb")
-	local fileHandle2, reason = installProxy.open(to, "wb")
+	local fileHandle2, reason = filesystemProxy.open(to, "wb")
 	local chunk = ""
 	if fileHandle and fileHandle2 then
 		chunk = filesystemProxy.read(fileHandle, math.huge)
-		installProxy.write(fileHandle2, chunk)
+		filesystemProxy.write(fileHandle2, chunk)
 	end
 end
 
@@ -226,5 +226,5 @@ background(config.mainColors.background, config.mainColors.backgroundUpper, conf
 status("Copying files...", config.mainColors.text)
 for i = 1, #config.libs do
 	progress(i / #config.libs, config)
-	copy_file(installerDir .. "/lib/" .. config.libs[i], "/lib/" .. config.libs[i])
+	copy_file(installerDir .. "/lib/" .. config.libs[i], installDir .. "/lib/" .. config.libs[i])
 end
