@@ -3,7 +3,15 @@ local screen = component.list("screen")()
 local gpu = component.list("gpu")()
 local eeprom = component.list("eeprom")()
 local component_invoke = component.invoke
+-- Boot invoke
 local function boot_invoke(address, method, ...)
+	local result = table.pack(pcall(component_invoke, address, method, ...))
+	if not result[1] then
+		return nil, result[2]
+	else
+		return table.unpack(result, 2, result.n)
+	end
+end
 
 -- Bind GPU to screen
 if gpu and screen then
@@ -20,17 +28,6 @@ end
 
 local init
 do
-	
-	-- Boot invoke
-		local result = table.pack(pcall(component_invoke, address, method, ...))
-		if not result[1] then
-			return nil, result[2]
-		else
-			return table.unpack(result, 2, result.n)
-		end
-	end
-	
-	
 	-- Get boot adress
 	computer.getBootAddress = function()
 		return boot_invoke(eeprom, "getData")
