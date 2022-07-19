@@ -44,15 +44,15 @@ function require(module)
 	else
 		package.loading[module] = true
 
-		local handle, reason = temporaryFilesystemProxy.open(installerPath .. "Libraries/" .. module .. ".lua", "rb")
+		local handle, reason = filesystemProxy.open(module, "rb")
 		if handle then
 			local data, chunk = ""
 			repeat
-				chunk = temporaryFilesystemProxy.read(handle, math.huge)
+				chunk = filesystemProxy.read(handle, math.huge)
 				data = data .. (chunk or "")
 			until not chunk
 
-			temporaryFilesystemProxy.close(handle)
+			filesystemProxy.close(handle)
 			
 			local result, reason = load(data, "=" .. module)
 			if result then
