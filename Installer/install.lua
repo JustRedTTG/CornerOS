@@ -136,7 +136,7 @@ end
 
 -- Filesystem
 local function copy_file(from, to)
-	installProxy.makeDirectory(filesystemPath(to))
+	filesystemProxy.makeDirectory(filesystemPath(to))
 
 	local fileHandle, reason = filesystemProxy.open(path, "rb")
 	local fileHandle2, reason = filesystemProxy.open(to, "wb")
