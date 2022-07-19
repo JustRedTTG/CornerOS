@@ -22,6 +22,7 @@ if gpu and screen then
 end
 
 local function error(message)
+	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
 	component_invoke(gpu, "setBackground", 0x180d21)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component_invoke(gpu, "set", 2, 2, "Corner OS EFI")
