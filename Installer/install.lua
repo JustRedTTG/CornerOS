@@ -200,7 +200,7 @@ end
 -- Begin Downloads
 local config = deserialize(request(installerURL .. "config.cfg"))
 --
-local debug = true
+local debug = false
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 progress(0, config)
 status("Please wait...", config.mainColors.text)
@@ -241,3 +241,5 @@ for i = 1, #config.bios do
 	progress(i+#config.libs / total, config)
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
+
+computer.reboot()
