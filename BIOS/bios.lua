@@ -27,6 +27,7 @@ local function error(message)
 	component_invoke(gpu, "set", 2, 2, "Corner OS EFI")
 	
 	while true
+	do
 		computer.pull()
 	end
 end
