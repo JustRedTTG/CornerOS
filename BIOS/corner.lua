@@ -5,10 +5,13 @@ local unicode = unicode
 local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
 end
+local function getComponentAddressSafe(name)
+	return component.list(name)() or nil
+end
 
 local EEPROMAddress, internetAddress, gpuAddress = 
 	getComponentAddress("eeprom"),
-	getComponentAddress("internet"),
+	getComponentAddressSafe("internet"),
 	getComponentAddress("gpu")
 
 -- Get Ready ~
