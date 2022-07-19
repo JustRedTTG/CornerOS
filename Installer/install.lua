@@ -138,12 +138,12 @@ end
 local function copy_file(from, to)
 	filesystemProxy.makeDirectory(filesystemPath(to))
 
-	local fileHandle, reason = filesystemProxy.open(path, "rb")
+	local fileHandle, reason = filesystemProxy.open(from, "rb")
 	local fileHandle2, reason = filesystemProxy.open(to, "wb")
 	local chunk = ""
 	if fileHandle and fileHandle2 then
 		chunk = filesystemProxy.read(fileHandle, math.huge)
-		filesystemProxy.write(fileHandle2, chunk)
+		filesystemProxy.write(fileHandle2, chunk or "")
 	end
 end
 
