@@ -65,4 +65,9 @@ function require(module)
 	end
 end
 
-computer.shutdown(true)
+
+GUI = require("/lib/GUI.lua")
+
+
+
+computer.shutdown()
