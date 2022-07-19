@@ -26,9 +26,9 @@ local function error(message)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component_invoke(gpu, "set", 2, 2, "Corner OS EFI")
 	
-	repeat
-		needWait = computer.pullSignal()
-	until needWait == "key_down" or needWait == "touch"
+	while true
+		computer.pull()
+	end
 end
 
 
