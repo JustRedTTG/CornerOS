@@ -71,8 +71,8 @@ function require(module)
 end
 
 
-error = require("/lib/error.lua").error
+error = require("/lib/error.lua")
 
-error("LOL")
+error.mild("LOL")
 
 computer.shutdown()

@@ -1,3 +1,3 @@
-local function error(message)
+local function mild(message)
 	computer.shutdown(true)
 end
