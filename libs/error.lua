@@ -13,9 +13,9 @@ end
 
 function error.screen()
 	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
-	component_invoke(gpu, "setBackground", 0x180d21)
-	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
-	component_invoke(gpu, "set", 2, 2, "Corner OS error screen.")
+	component.invoke(gpu, "setBackground", 0x180d21)
+	component.invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
+	component.invoke(gpu, "set", 2, 2, "Corner OS error screen.")
 end
 
 function error.mild(message)
