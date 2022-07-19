@@ -246,9 +246,8 @@ for i = 1, #config.libs do
 end
 
 for i = 1, #config.bios do
-	progress((#config.libs)+i-1 / total, config)
+	progress(i / total, config)
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
 filesystemProxy.remove(installerDir)
-filesystemProxy.remove("/corner.lua")
 computer.shutdown(true)
