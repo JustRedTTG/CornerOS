@@ -31,6 +31,8 @@ local function filesystemPath(path)
 	return path:match("^(.+%/).") or ""
 end
 
+package = {loading = {}, loaded = {}}
+
 function require(module)
 	if package.loaded[module] then
 		return package.loaded[module]
