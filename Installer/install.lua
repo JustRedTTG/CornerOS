@@ -242,4 +242,4 @@ for i = 1, #config.bios do
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
 
-computer.reboot()
+computer.shutdown(true)
