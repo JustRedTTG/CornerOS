@@ -138,12 +138,17 @@ end
 local function copy_file(from, to)
 	filesystemProxy.makeDirectory(filesystemPath(to))
 
-	local fileHandle, reason = filesystemProxy.open(from, "rb")
-	local fileHandle2, reason = filesystemProxy.open(to, "wb")
+	local fileHandle, reason1 = filesystemProxy.open(from, "rb")
+	local fileHandle2, reason2 = filesystemProxy.open(to, "wb")
 	local chunk = ""
 	if fileHandle and fileHandle2 then
 		chunk = filesystemProxy.read(fileHandle, math.huge)
 		filesystemProxy.write(fileHandle2, chunk or "")
+		
+		filesystemProxy.close(fileHandle)
+		filesystemProxy.close(fileHandle2)
+	else
+		error("File opening failed: " .. tostring(reason) .. " ; " .. tostring(reason2))
 	end
 end
 
@@ -238,8 +243,9 @@ for i = 1, #config.libs do
 end
 
 for i = 1, #config.bios do
-	progress(i+#config.libs / total, config)
+	progress((#config.libs)+i / total, config)
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
-
+filesystemProxy.remove(installerDir)
+filesystemProxy.remove("/corner.lua")
 computer.shutdown(true)
