@@ -17,7 +17,7 @@ do
 end
 
 local function error(message)
-	computer.beep(700, 0.2)
+	computer.shutdown()
 end
 
 
