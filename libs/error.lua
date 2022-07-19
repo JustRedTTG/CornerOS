@@ -7,7 +7,7 @@ local error = {}
 
 function error.beep()
 	for i = 1, 3 do
-		computer.beep(2000, 0.3)
+		computer.beep(i * 500, 0.3)
 	end
 end
 
