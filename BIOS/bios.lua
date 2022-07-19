@@ -22,7 +22,13 @@ if gpu and screen then
 end
 
 local function error(message)
-	computer.shutdown()
+	component_invoke(gpu, "setBackground", 0x180d21)
+	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
+	component_invoke(gpu, "set", 2, 2, "Corner OS EFI")
+	
+	repeat
+		needWait = computer.pullSignal()
+	until needWait == "key_down" or needWait == "touch"
 end
 
 
