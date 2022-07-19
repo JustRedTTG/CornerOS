@@ -13,7 +13,11 @@ local EEPROMAddress, internetAddress, gpuAddress =
 	getComponentAddress("gpu")
 
 -- Get Ready ~
+local installerDir = "/download/"
+local installDir = "/mnt/1cd/"
+
 local filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
+local installProxy = component.proxy(installDir)
 do
 local addr, invoke = computer.getBootAddress(), component.invoke
 	local function loadfile(file)
@@ -130,6 +134,19 @@ local function download(url, path)
 	end
 end
 
+-- Filesystem
+local function copy_file(from, to)
+	installProxy.makeDirectory(filesystemPath(to))
+
+	local fileHandle, reason = filesystemProxy.open(path, "rb")
+	local fileHandle2, reason = installProxy.open(to, "wb")
+	local chunk = ""
+	if fileHandle and fileHandle2 then
+		chunk = filesystemProxy.read(fileHandle, math.huge)
+		installProxy.write(fileHandle2, chunk)
+	end
+end
+
 -- Binding GPU to screen
 component.invoke(gpuAddress, "bind", getComponentAddress("screen"))
 local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
@@ -199,8 +216,15 @@ if debug then
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
-status("Downloading system...", config.mainColors.text)
+status("Downloading Libraries...", config.mainColors.text)
 for i = 1, #config.libs do
 	progress(i / #config.libs, config)
-	download("/libs/" .. config.libs[i], "/lib/" .. config.libs[i])
+	download("/libs/" .. config.libs[i], installerDir .. "/lib/" .. config.libs[i])
+end
+
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
+status("Copying files...", config.mainColors.text)
+for i = 1, #config.libs do
+	progress(i / #config.libs, config)
+	copy_file(installerDir .. "/lib/" .. config.libs[i], "/lib/" .. config.libs[i])
 end
