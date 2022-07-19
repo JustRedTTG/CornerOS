@@ -199,8 +199,8 @@ if debug then
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
-status("Downloading system...")
+status("Downloading system...", config.mainColors.text)
 for i = 1, #config.libs do
-	--progress(i / #config.libs, config)
-	--download("/libs/" .. config.libs[i], "/lib/" .. config.libs[i])
+	progress(i / #config.libs, config)
+	download("/libs/" .. config.libs[i], "/lib/" .. config.libs[i])
 end
