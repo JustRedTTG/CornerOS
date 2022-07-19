@@ -21,7 +21,7 @@ if gpu and screen then
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
 
-local function computer.error(message)
+local function error(message)
 	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
 	component_invoke(gpu, "setBackground", 0x180d21)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
@@ -87,6 +87,9 @@ do
 	-- Error no boot
 	if not init then
 		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
+		
+	else
+		init.error = error
 	end
 computer.beep(500, 0.2)
 end
