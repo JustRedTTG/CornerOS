@@ -73,6 +73,6 @@ end
 
 GUI = require("/lib/GUI.lua")
 
-error("LOL")
+EFIerror("LOL")
 
 computer.shutdown()
