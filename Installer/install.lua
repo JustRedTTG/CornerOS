@@ -226,7 +226,7 @@ background(config.mainColors.background, config.mainColors.backgroundUpper, conf
 status("Downloading Boot...", config.mainColors.text)
 for i = 1, #config.bios do
 	progress(i / #config.bios, config)
-	download("/BOOT/" .. config.bios[i], installerDir .. "/boot/" .. config.bios[i])
+	download("/BIOS/" .. config.bios[i], installerDir .. "/boot/" .. config.bios[i])
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
