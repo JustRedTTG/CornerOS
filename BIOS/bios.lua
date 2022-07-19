@@ -21,7 +21,7 @@ if gpu and screen then
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 end
 
-local function EFIerror(message)
+local function error(message)
 	component_invoke(gpu, "setBackground", 0x180d21)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component_invoke(gpu, "set", 2, 2, "Corner OS EFI")
