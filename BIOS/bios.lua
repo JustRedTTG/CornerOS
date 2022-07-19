@@ -1,9 +1,4 @@
-local function error(message)
-	
-end
-
-
-local init
+local pre_init
 do
 	-- Get component
 	local screen = component.list("screen")()
@@ -11,6 +6,24 @@ do
 	local eeprom = component.list("eeprom")()
 	local component_invoke = component.invoke
 	local function boot_invoke(address, method, ...)
+	
+	-- Bind GPU to screen
+    if gpu and screen then
+		boot_invoke(gpu, "bind", screen)
+		local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
+		component_invoke(gpu, "setBackground", 0x000000)
+		component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
+    end
+end
+
+local function error(message)
+	computer.beep(700, 0.2)
+end
+
+
+local init
+do
+	
 	-- Boot invoke
 		local result = table.pack(pcall(component_invoke, address, method, ...))
 		if not result[1] then
@@ -19,13 +32,7 @@ do
 			return table.unpack(result, 2, result.n)
 		end
 	end
-	-- Bind GPU to screen
-    if gpu and screen then
-		boot_invoke(gpu, "bind", screen)
-		local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
-		component_invoke(gpu, "setBackground", 0x000000)
-		component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
-    end
+	
 	
 	-- Get boot adress
 	computer.getBootAddress = function()
@@ -82,5 +89,7 @@ do
 	end
 computer.beep(500, 0.2)
 end
+
+pre_init()
 
 init()
