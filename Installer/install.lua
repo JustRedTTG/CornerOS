@@ -39,6 +39,42 @@ local function filesystemPath(path)
 	return path:match("^(.+%/).") or ""
 end
 
+package = {loading = {}, loaded = {}}
+
+function require(module)
+	if package.loaded[module] then
+		return package.loaded[module]
+	elseif package.loading[module] then
+		error("already loading " .. module .. ": " .. debug.traceback())
+	else
+		package.loading[module] = true
+
+		local handle, reason = temporaryFilesystemProxy.open(installerPath .. "Libraries/" .. module .. ".lua", "rb")
+		if handle then
+			local data, chunk = ""
+			repeat
+				chunk = temporaryFilesystemProxy.read(handle, math.huge)
+				data = data .. (chunk or "")
+			until not chunk
+
+			temporaryFilesystemProxy.close(handle)
+			
+			local result, reason = load(data, "=" .. module)
+			if result then
+				package.loaded[module] = result() or true
+			else
+				error(reason)
+			end
+		else
+			error("File opening failed: " .. tostring(reason))
+		end
+
+		package.loading[module] = nil
+
+		return package.loaded[module]
+	end
+end
+
 -- Internet
 local config
 local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
@@ -162,6 +198,9 @@ if debug then
 	until needWait == "key_down" or needWait == "touch"
 end
 
-
-
-download(installerURL .. "config.cfg", "/config.cfg")
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
+status("Downloading system...")
+for i = 1, #config.libs do
+	progress(i / #config.libs, config)
+	download("/libs/" .. config.libs[i], "/lib/" .. config.libs)
+end
