@@ -26,9 +26,8 @@ local function error(message)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component_invoke(gpu, "set", 2, 2, "Corner OS EFI")
 	
-	while true
-	do
-		computer.pull()
+	while computer.pullSignal() ~= "key_down" do
+		
 	end
 end
 
