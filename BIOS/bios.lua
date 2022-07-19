@@ -1,3 +1,8 @@
+local function error(message)
+	
+end
+
+
 local init
 do
 	-- Get component
@@ -77,4 +82,5 @@ do
 	end
 computer.beep(500, 0.2)
 end
+
 init()
