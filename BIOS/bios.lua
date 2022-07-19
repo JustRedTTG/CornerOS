@@ -25,7 +25,7 @@ local function error(message)
 	local screenWidth, screenHeight = component_invoke(gpu, "getResolution")
 	component_invoke(gpu, "setBackground", 0x180d21)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
-	component_invoke(gpu, "set", 2, 2, "Corner OS EFI.")
+	component_invoke(gpu, "set", 4, 4, "Corner OS EFI.")
 	
 	while computer.pullSignal() ~= "key_down" do
 		

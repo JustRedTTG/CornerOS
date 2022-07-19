@@ -15,7 +15,8 @@ function error.screen(message)
 	local screenWidth, screenHeight = component.invoke(gpu, "getResolution")
 	component.invoke(gpu, "setBackground", 0x180d21)
 	component.invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
-	component.invoke(gpu, "set", 2, 2, "Corner OS error screen.")
+	component.invoke(gpu, "set", 4, 4, "Corner OS error screen.")
+	component.invoke(gpu, "set", screenWidth * .5 - 11, screenHeight * .5, "Sorry to interrupt  :(")
 	component.invoke(gpu, "set", screenWidth * .5 - #message * .5, screenHeight * .5, message)
 end
 

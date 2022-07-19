@@ -73,6 +73,6 @@ end
 
 error = require("/lib/error.lua")
 
-error.mild("LOL")
+error.mild("This is a test for the error library, just press a button to continue")
 
 computer.shutdown()
