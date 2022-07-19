@@ -202,5 +202,5 @@ background(config.mainColors.background, config.mainColors.backgroundUpper, conf
 status("Downloading system...")
 for i = 1, #config.libs do
 	progress(i / #config.libs, config)
-	download("/libs/" .. config.libs[i], "/lib/" .. config.libs[i])
+	--download("/libs/" .. config.libs[i], "/lib/" .. config.libs[i])
 end
