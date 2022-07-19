@@ -239,14 +239,13 @@ status("Copying files...", config.mainColors.text)
 
 --filesystemProxy.remove(installDir .. "lib")
 
-local total = #config.libs + #config.bios
 for i = 1, #config.libs do
-	progress(i / total, config)
+	progress(i / #config.libs, config)
 	copy_file(installerDir .. "/lib/" .. config.libs[i], installDir .. "/lib/" .. config.libs[i])
 end
 
 for i = 1, #config.bios do
-	progress(i / total, config)
+	progress(i / #config.bios, config)
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
 filesystemProxy.remove(installerDir)
