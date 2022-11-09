@@ -78,4 +78,4 @@ local filelib = require("/lib/filelib.lua")
 local update_lib = require("/files/install_lib.lua")
 update_lib.check()
 
-computer.shutdown(1)
+computer.shutdown()
