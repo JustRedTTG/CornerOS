@@ -3,6 +3,10 @@ local error = require("/lib/error.lua")
 local filelib = {}
 
 function filelib.load_file_text(file, proxy)
+	if not proxy then
+		error.mild("File Lib, proxy error")
+		return ''
+	end
 	if not proxy.exists(file) then
 		error.mild("File does not exist: " .. tostring(file))
 		return ''
