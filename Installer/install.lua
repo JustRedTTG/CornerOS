@@ -7,7 +7,7 @@ local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
 end
 
-local EEPROMAddress, internetAddress, gpuAddress = 
+local EEPROMAddress, internetAddress, gpuAddress =
 	getComponentAddress("eeprom"),
 	getComponentAddress("internet"),
 	getComponentAddress("gpu")
@@ -57,8 +57,8 @@ local function rawRequest(url, chunkHandler)
 	if internetHandle then
 		local chunk, reason
 		while true do
-			chunk, reason = internetHandle.read(1024)	
-			
+			chunk, reason = internetHandle.read(math.huge)
+
 			if chunk then
 				chunkHandler(chunk)
 			else
@@ -77,7 +77,7 @@ local function rawRequest(url, chunkHandler)
 end
 local function request(url)
 	local data = ""
-	
+
 	rawRequest(url, function(chunk)
 		data = data .. chunk
 	end)
@@ -88,7 +88,7 @@ local function download(url, path)
 	filesystemProxy.makeDirectory(filesystemPath(path))
 
 	local fileHandle, reason = filesystemProxy.open(path, "wb")
-	if fileHandle then	
+	if fileHandle then
 		rawRequest(url, function(chunk)
 			filesystemProxy.write(fileHandle, chunk)
 		end)
@@ -109,7 +109,7 @@ local function copy_file(from, to)
 	if fileHandle and fileHandle2 then
 		chunk = filesystemProxy.read(fileHandle, math.huge)
 		filesystemProxy.write(fileHandle2, chunk or "")
-		
+
 		filesystemProxy.close(fileHandle)
 		filesystemProxy.close(fileHandle2)
 	else
@@ -127,13 +127,13 @@ local function box(color, color2, color3, x, y, sizeX, sizeY, config)
 	component.invoke(gpuAddress, "setForeground", color2)
 	component.invoke(gpuAddress, "fill", x, y, sizeX, 1, config.mainCharacters.boxHorizontal)
 	component.invoke(gpuAddress, "fill", x, y, 1, sizeY, config.mainCharacters.boxVertical)
-	
+
 	component.invoke(gpuAddress, "set", x, y, config.mainCharacters.boxTopLeft)
 	component.invoke(gpuAddress, "set", x, y+sizeY-1, config.mainCharacters.boxBottomLeft)
 	component.invoke(gpuAddress, "setForeground", color3)
 	component.invoke(gpuAddress, "fill", x+1, y+sizeY-1, sizeX-1, 1, config.mainCharacters.boxHorizontal)
 	component.invoke(gpuAddress, "fill", x+sizeX-1, y+1, 1, sizeY-1, config.mainCharacters.boxVertical)
-	
+
 	component.invoke(gpuAddress, "set", x+sizeX-1, y, config.mainCharacters.boxTopRight)
 	component.invoke(gpuAddress, "set", x+sizeX-1, y+sizeY-1, config.mainCharacters.boxBottomRight)
 end
