@@ -62,7 +62,7 @@ function require(module)
 				error(reason)
 			end
 		else
-			error("File opening module: " .. tostring(module))
+			error("Fail opening module: " .. tostring(module))
 		end
 
 		package.loading[module] = nil
