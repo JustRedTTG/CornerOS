@@ -15,7 +15,8 @@ local EEPROMAddress, internetAddress, gpuAddress =
 	getComponentAddress("gpu")
 
 -- Get Ready ~
-local filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
+---@diagnostic disable-next-line: lowercase-global
+filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
 
 do
 local addr, invoke = computer.getBootAddress(), component.invoke
