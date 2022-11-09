@@ -1,6 +1,6 @@
-local component = component
-local computer = computer
-local unicode = unicode
+component = component
+computer = computer
+unicode = unicode
 
 local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
