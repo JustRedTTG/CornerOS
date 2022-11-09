@@ -70,12 +70,8 @@ function require(module)
 	end
 end
 
-local error = require("/lib/error.lua")
-
-error.mild("gonna load now!")
-
-local filelib = require("/lib/filelib.lua")
+local corner = require("/corner2.lua")
 local update_lib = require("/files/install_lib.lua")
 update_lib.check()
-
+corner.load()
 computer.shutdown()

@@ -5,6 +5,10 @@ local error = require("/lib/error.lua")
 local filelib = {}
 
 function filelib.load_file_text(file, proxy)
+	if not proxy.exists(file) then
+		error.mild("File does not exist: " .. tostring(file))
+		return ''
+	end
     local handle, reason = proxy.open(file, "r")
 		if handle then
 			local data, chunk = "", nil
