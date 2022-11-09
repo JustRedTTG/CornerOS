@@ -16,7 +16,7 @@ function error.screen(message)
 	component.invoke(gpu, "setBackground", 0x180d21)
 	component.invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component.invoke(gpu, "set", 4, 2, "Corner OS error screen.")
-	component.invoke(gpu, "set", 4, screenHeight, "Press any key to shutdown.")
+	component.invoke(gpu, "set", 4, screenHeight, "Press any key.")
 	component.invoke(gpu, "set", screenWidth * .5 - 11, screenHeight * .5 -1, "Sorry to interrupt  :(")
 	component.invoke(gpu, "set", screenWidth * .5 - #message * .5, screenHeight * .5, message)
 end
