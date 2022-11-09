@@ -45,7 +45,8 @@ end
 
 -- Internet
 local config
-local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/"
+local repositoryBranch = "debug"
+local repositoryURL = "https://corneros.pythonanywhere.com/"..repositoryBranch.."/"
 local installerURL = "Installer/"
 
 local function rawRequest(url, chunkHandler)

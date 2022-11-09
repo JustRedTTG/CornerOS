@@ -1,5 +1,6 @@
 os.execute("clear")
 os.execute("echo Flashing Corner OS")
-os.execute("echo crude build reference: 43")
-os.execute("wget -fq https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/Installer/install.lua /corner.lua")
-os.execute("wget -fq https://raw.githubusercontent.com/JustRedTTG/CornerOS/main/BIOS/bios.lua /tmp/bios.lua && flash -q /tmp/bios.lua CornerOS && reboot")
+os.execute("echo crude build reference: 44")
+local branch = "debug"
+os.execute("wget -fq https://corneros.pythonanywhere.com/"..branch.."/Installer/install.lua /corner.lua")
+os.execute("wget -fq https://corneros.pythonanywhere.com/"..branch.."/BIOS/bios.lua /tmp/bios.lua && flash -q /tmp/bios.lua CornerOS && reboot")
