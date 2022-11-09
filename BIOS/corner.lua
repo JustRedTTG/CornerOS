@@ -58,10 +58,10 @@ function require(module)
 			if result then
 				package.loaded[module] = result() or true
 			else
-				error.major(reason)
+				error(reason)
 			end
 		else
-			error.major("File opening failed: " .. tostring(reason))
+			error("File opening module: " .. tostring(module))
 		end
 
 		package.loading[module] = nil
@@ -69,7 +69,6 @@ function require(module)
 		return package.loaded[module]
 	end
 end
-local error = require("/lib/error.lua")
 local corner = require("/corner2.lua")
 local update_lib = require("/files/install_lib.lua")
 update_lib.check()
