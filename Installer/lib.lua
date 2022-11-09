@@ -6,8 +6,14 @@ local requests = require("requests")
 local config_loader = require("config_loader")
 local filelib = require("filelib")
 
-local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", filesystemProxy))
+local install_lib = {}
 
-error.major(config.branch)
+function install_lib.update()
+    local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", filesystemProxy))
 
-computer.shutdown(true)
+    error.major(config.branch)
+
+    computer.shutdown(true)
+end
+
+return install_lib
