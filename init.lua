@@ -4,13 +4,3 @@ os.execute("echo crude build reference: 62")
 local branch = "debug"
 os.execute("wget -fq https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/Installer/install.lua /corner.lua")
 os.execute("wget -fq https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/BIOS/bios.lua /tmp/bios.lua && flash -q /tmp/bios.lua CornerOS && reboot")
--- random shit test
--- random shit test
--- random shit test
--- random shit test
--- random shit test
--- random shit test
--- random shit test
--- random shit test
--- random shit test
--- random shit test
