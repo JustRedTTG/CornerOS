@@ -203,7 +203,7 @@ background(config.mainColors.background, config.mainColors.backgroundUpper, conf
 status("Downloading Files...", config.mainColors.text)
 for i = 1, #config.files do
 	progress(i / #config.files, config)
-	download(config.bios[i], installerDir .. "/files/" .. config.files_names[i])
+	download(config.files[i], installerDir .. "/files/" .. config.files_names[i])
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
