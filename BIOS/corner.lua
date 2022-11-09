@@ -70,7 +70,7 @@ function require(module)
 	end
 end
 
-error = require("/lib/error.lua")
+local error = require("/lib/error.lua")
 
 error.mild("gonna load now!")
 
