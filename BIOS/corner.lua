@@ -46,7 +46,7 @@ function require(module)
 
 		local handle, reason = filesystemProxy.open(module, "rb")
 		if handle then
-			local data, chunk = ""
+			local data, chunk = "", nil
 			repeat
 				chunk = filesystemProxy.read(handle, math.huge)
 				data = data .. (chunk or "")
@@ -71,13 +71,18 @@ function require(module)
 end
 
 error = require("/lib/error.lua")
+filelib = require("/lib/filelib.lua")
 config_loader = require("/lib/config_loader.lua")
-gui = require("/lib/GUI.lua")
-
--- config_loader.from_text()
-
+config_loader.
+GUI = require("/lib/GUI.lua")
 
 
+config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", filesystemProxy))
+
+
+while true do
+	GUI.box(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, 1, 1, 10, 10, config)
+end
 
 
 computer.shutdown()
