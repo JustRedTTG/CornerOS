@@ -13,6 +13,7 @@ function install_lib.update()
     local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", filesystemProxy))
 
     error.major(config.branch)
+    -- display the branch
 
     computer.shutdown(true)
 end
