@@ -29,4 +29,12 @@ function error.mild(message)
 	end
 end
 
+function error.major(message)
+	error.screen(message)
+	error.beep()
+	while computer.pullSignal() ~= "key_down" do
+		computer.shutdown()
+	end
+end
+
 return error
