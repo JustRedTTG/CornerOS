@@ -83,6 +83,7 @@ config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", fil
 
 while true do
 	GUI.box(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, 1, 1, 10, 10, config)
+	computer.pullSignal()
 end
 
 
