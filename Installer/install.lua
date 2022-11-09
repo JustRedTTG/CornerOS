@@ -187,9 +187,9 @@ end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 status("Downloading Libraries...", config.mainColors.text)
-for i = 1, #config.libs do
-	progress(i / #config.libs, config)
-	download("/libs/" .. config.libs[i], installerDir .. "/lib/" .. config.libs[i])
+for i = 1, #config.install_required_libs do
+	progress(i / #config.install_required_libs, config)
+	download("/libs/" .. config.install_required_libs[i], installerDir .. "/lib/" .. config.install_required_libs[i])
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
@@ -211,9 +211,9 @@ status("Copying files...", config.mainColors.text)
 
 --filesystemProxy.remove(installDir .. "lib")
 
-for i = 1, #config.libs do
-	progress(i / #config.libs, config)
-	copy_file(installerDir .. "/lib/" .. config.libs[i], installDir .. "/lib/" .. config.libs[i])
+for i = 1, #config.install_required_libs do
+	progress(i / #config.install_required_libs, config)
+	copy_file(installerDir .. "/lib/" .. config.install_required_libs[i], installDir .. "/lib/" .. config.install_required_libs[i])
 end
 
 for i = 1, #config.bios do

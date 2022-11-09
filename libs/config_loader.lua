@@ -1,5 +1,5 @@
 
-error = require("/lib/error.lua")
+local error = require("/lib/error.lua")
 
 local config_loader = {}
 
