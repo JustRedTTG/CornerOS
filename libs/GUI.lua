@@ -1,9 +1,8 @@
 local component = component
-local computer = computer
 
 error = require("/lib/error.lua")
 
-local gpu = component.list("gpu")() or error("Couldn't get GPU address in GUI.lua.")
+local gpuAddress = component.list("gpu")() or error.major("Couldn't get GPU address in GUI.lua.")
 
 local gui = {}
 

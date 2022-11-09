@@ -17,7 +17,7 @@ function filelib.load_file_text(file, proxy)
 
             return data
 		else
-			error("File opening failed: " .. tostring(reason))
+			error.major("File opening failed: " .. tostring(reason))
 		end
 end
 

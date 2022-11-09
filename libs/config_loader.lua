@@ -8,7 +8,7 @@ function config_loader.from_text(text)
 	if result then
 		return result()
 	else
-		error(reason)
+		error.major(reason)
 	end
 end
 

@@ -71,11 +71,12 @@ function require(module)
 end
 
 error = require("/lib/error.lua")
+
+error.mild("gonna load now!")
+
 filelib = require("/lib/filelib.lua")
 config_loader = require("/lib/config_loader.lua")
-config_loader.
 GUI = require("/lib/GUI.lua")
-
 
 config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", filesystemProxy))
 

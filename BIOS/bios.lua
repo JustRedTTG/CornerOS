@@ -86,6 +86,7 @@ do
 	
 	-- Error no boot
 	if not init then
+---@diagnostic disable-next-line: redundant-parameter
 		error("Couldn't boot." .. (reason and (": " .. tostring(reason)) or "") .. (reason2 and (" ; " .. tostring(reason2)) or ""), 0)
 	end
 computer.beep(500, 0.2)
