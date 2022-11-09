@@ -1,10 +1,10 @@
 local computer
 
-local error = require("error")
+local error = require("/lib/error.lua")
 
-local requests = require("requests")
-local config_loader = require("config_loader")
-local filelib = require("filelib")
+local requests = require("/lib/requests.lua")
+local config_loader = require("/lib/config_loader.lua")
+local filelib = require("/lib/filelib.lua")
 
 local install_lib = {}
 

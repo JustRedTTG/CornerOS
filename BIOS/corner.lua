@@ -70,7 +70,7 @@ function require(module)
 	end
 end
 local corner = require("/corner2.lua")
-local update_lib = require("/files/install_lib.lua")
-update_lib.check()
+local install_lib = require("/files/install_lib.lua")
+install_lib.check()
 corner.load()
 computer.shutdown()
