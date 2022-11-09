@@ -1,5 +1,3 @@
-local component = component
-
 local error = require("/lib/error.lua")
 
 local filelib = {}

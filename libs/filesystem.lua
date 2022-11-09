@@ -8,9 +8,13 @@ end
 
 local EEPROMAddress = getComponentAddress("eeprom")
 
-local filesystem = {
-    root = component.proxy(component.invoke(EEPROMAddress, "getData"))
-}
+local filesystem = {}
+
+function filesystem.getRoot()
+    return component.proxy(component.invoke(EEPROMAddress, "getData"))
+end
+
+filesystem.root = filesystem.getRoot()
 
 
 return filesystem
