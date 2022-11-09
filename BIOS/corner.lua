@@ -76,9 +76,6 @@ error.mild("gonna load now!")
 
 local filelib = require("/lib/filelib.lua")
 local update_lib = require("/files/install_lib.lua")
-local update = filelib.load_file_text("/files/update.txt")
-if update == 'true' then
-	update_lib.update()
-end
+update_lib.check()
 
 computer.shutdown(1)

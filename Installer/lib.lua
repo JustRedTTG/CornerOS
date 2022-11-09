@@ -16,4 +16,11 @@ function install_lib.update()
     computer.shutdown(true)
 end
 
+function install_lib.check()
+    local update = filelib.load_file_text("/files/update.txt")
+    if update == 'true' then
+        install_lib.update()
+    end
+end
+
 return install_lib
