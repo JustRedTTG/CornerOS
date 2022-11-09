@@ -198,6 +198,9 @@ for i = 1, #config.bios do
 	progress(i / #config.bios, config)
 	download("/BIOS/" .. config.bios[i], installerDir .. "/boot/" .. config.bios[i])
 end
+
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
+status("Downloading Files...", config.mainColors.text)
 for i = 1, #config.files do
 	progress(i / #config.files, config)
 	download(config.bios[i], installerDir .. "/files/" .. config.files_names[i])
@@ -219,7 +222,7 @@ for i = 1, #config.bios do
 end
 for i = 1, #config.files do
 	progress(i / #config.files, config)
-	copy_file(installerDir .. "/files/" .. config.files_names[i], installDir .. config.files[i])
+	copy_file(installerDir .. "/files/" .. config.files_names[i], installDir .. "/files/" .. config.files_names[i])
 end
 filesystemProxy.remove(installerDir)
 computer.shutdown(true)
