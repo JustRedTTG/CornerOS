@@ -213,5 +213,9 @@ for i = 1, #config.bios do
 	progress(i / #config.bios, config)
 	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
 end
+for i = 1, #config.files do
+	progress(i / #config.files, config)
+	copy_file(installerDir .. config.files[i], installDir .. config.files[i])
+end
 filesystemProxy.remove(installerDir)
 computer.shutdown(true)

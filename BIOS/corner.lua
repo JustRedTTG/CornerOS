@@ -70,9 +70,14 @@ function require(module)
 	end
 end
 
-
 error = require("/lib/error.lua")
+config_loader = require("/lib/config_loader.lua")
+gui = require("/lib/GUI.lua")
 
--- error.mild("This is a test for the error library, just press a button to continue")
+-- config_loader.from_text()
+
+
+
+
 
 computer.shutdown()
