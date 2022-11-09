@@ -13,8 +13,7 @@ local install_lib = {}
 
 function install_lib.update()
     error.mild("gonna update now!")
-    local file_data = filelib.load_file_text("/files/config.cfg", proxy)
-    local config = config_loader.from_text()
+    local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", proxy))
 
     error.major(config.branch)
     -- display the branch
@@ -23,8 +22,7 @@ function install_lib.update()
 end
 
 function install_lib.check()
-    local update = filelib.load_file_text("/files/update.txt")
-    if update == 'true' then
+    if filelib.load_file_text("/files/update.txt", proxy) == 'true' then
         install_lib.update()
     end
 end
