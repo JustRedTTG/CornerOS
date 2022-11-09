@@ -57,7 +57,7 @@ local function rawRequest(url, chunkHandler)
 	if internetHandle then
 		local chunk, reason
 		while true do
-			chunk, reason = internetHandle.read(math.huge)	
+			chunk, reason = internetHandle.read(1024)	
 			
 			if chunk then
 				chunkHandler(chunk)
