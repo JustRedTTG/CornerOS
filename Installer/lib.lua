@@ -22,7 +22,7 @@ function install_lib.update()
 end
 
 function install_lib.check()
-    if filelib.load_file_text("/files/update.txt", proxy) == 'true' then
+    if tostring(filelib.load_file_text("/files/update.txt", proxy)) == 'true' then
         install_lib.update()
     end
 end
