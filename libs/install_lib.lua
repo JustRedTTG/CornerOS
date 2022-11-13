@@ -5,7 +5,7 @@ local error = require("/lib/error.lua")
 local requests = require("/lib/requests.lua")
 local filesystem = require("/lib/filesystem.lua")
 local config_loader = require("/lib/config_loader.lua")
-local screen = require("/files/install_screen.lua")
+local screen = require("/lib/screen.lua")
 local filelib = require("/lib/filelib.lua")
 
 local proxy = filesystem.getRoot()

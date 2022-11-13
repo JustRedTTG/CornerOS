@@ -70,6 +70,6 @@ function getComponentAddress(name)
 	return component.list(name)() or error.mild("Required " .. name .. " component is missing")
 end
 local corner = require("/corner2.lua")
-local install_lib = require("/files/install_lib.lua")
+local install_lib = require("/lib/install_lib.lua")
 install_lib.check()
 corner.load()

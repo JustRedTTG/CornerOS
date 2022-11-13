@@ -224,5 +224,6 @@ for i = 1, #config.files do
 	progress(i / #config.files, config)
 	copy_file(installerDir .. "/files/" .. config.files_names[i], installDir .. "/files/" .. config.files_names[i])
 end
+copy_file(installerDir .. "/files/install_lib.lua", installDir .. "/lib/install_lib.lua")
 filesystemProxy.remove(installerDir)
 computer.shutdown(true)
