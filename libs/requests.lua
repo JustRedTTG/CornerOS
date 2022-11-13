@@ -3,20 +3,22 @@ local component = component
 local error = require('/lib/error.lua')
 local requests = {}
 
-local internet = component.get('internet')
+local internet = getComponentAddressSafe('internet')
 
 local function getNetworkComponent()
-    internet = component.get('internet')
+    getComponentAddressSafe('internet')
 end
 
 
 function requests.get(page)
     if internet == nil then
-        error.mild("Can't complete GET request, no internet component")
         getNetworkComponent()
-        return nil
+        if internet == nil then
+            error.mild("Can't complete GET request, no internet component")
+            return nil
+        end
     end
-    local response = internet.request(page)
+    local response = component.invoke(internet, 'request', page)
     local body = ""
     for chunk in response do
       body = body .. chunk
