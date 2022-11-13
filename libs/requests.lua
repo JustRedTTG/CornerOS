@@ -34,7 +34,7 @@ end
 function requests.download(page, path, fileProxy)
     fileProxy.makeDirectory(path)
 
-	local fileHandle, reason = fileProxy.open(path, "wb")
+	local fileHandle, reason = fileProxy.open(page, "wb")
 	if fileHandle then
 		rawRequest(url, function(chunk)
 			fileProxy.write(fileHandle, chunk)
