@@ -14,6 +14,7 @@ end
 function error.screen(message)
 	local screenWidth, screenHeight = component.invoke(gpu, "getResolution")
 	component.invoke(gpu, "setBackground", 0x180d21)
+	component.invoke(gpu, "setForeground", 0xFFFFFF)
 	component.invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component.invoke(gpu, "set", 4, 2, "Corner OS error screen.")
 	component.invoke(gpu, "set", 4, screenHeight-1, "Press any key.")
