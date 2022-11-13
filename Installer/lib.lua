@@ -22,7 +22,7 @@ function install_lib.check()
     screen.status("Installer is being downloaded.", config.mainColors.text)
 
     -- Install the full installer
-    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/lib/install_lib.lua", "/lib/install_lib.lua")
+    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/install_lib.lua", "/lib/install_lib.lua")
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/full_config.cfg", "/config.cfg")
 
     computer.shutdown(true)

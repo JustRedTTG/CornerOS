@@ -22,7 +22,7 @@ function install_lib.update()
     screen.status("Update, please wait", config.mainColors.text)
 
     -- Install files
-    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/lib/install_lib.lua", "/lib/install_lib.lua")
+    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/install_lib.lua", "/lib/install_lib.lua")
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/full_config.cfg", "/config.cfg")
     error.mild("Everything is good!")
     computer.shutdown(true)
