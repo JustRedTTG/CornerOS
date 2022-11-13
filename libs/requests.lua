@@ -1,7 +1,7 @@
 local computer = computer
 local component = component
 local error = require('/lib/error.lua')
-local filesystem = require('/lib/filesystem')
+local filesystem = require('/lib/filesystem.lua')
 local requests = {}
 
 local internet = getComponentAddressSafe('internet')
