@@ -30,15 +30,14 @@ end
 function requests.download(page, path, fileProxy)
     fileProxy.makeDirectory(filesystem.path(path))
 
+    local data = requests.get(page)
+    if data == "" then
+        error.mild("Got no data from requests.get(page)")
+        return nil
+    end
 	local fileHandle, reason = fileProxy.open(path, "wb")
 	if fileHandle then
-        local data = requests.get(page)
-        if not data == "" then
-		    fileProxy.write(fileHandle, data)
-        else
-            error.mild("Got no data from requests.get(page)")
-        end
-
+        fileProxy.write(fileHandle, data)
 		fileProxy.close(fileHandle)
 	else
 		error.mild("File opening failed: " .. tostring(reason))
