@@ -1,6 +1,7 @@
 local computer = computer
 local component = component
 local error = require('/lib/error.lua')
+local filesystem = require('/lib/filesystem')
 local requests = {}
 
 local internet = getComponentAddressSafe('internet')
@@ -27,12 +28,12 @@ function requests.get(page)
 end
 
 function requests.download(page, path, fileProxy)
-    fileProxy.makeDirectory(path)
+    fileProxy.makeDirectory(filesystem.path(path))
 
 	local fileHandle, reason = fileProxy.open(path, "wb")
 	if fileHandle then
         local data = requests.get(page)
-        if data then
+        if not data == "" then
 		    fileProxy.write(fileHandle, data)
         else
             error.mild("Got no data from requests.get(page)")
