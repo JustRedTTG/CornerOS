@@ -23,7 +23,7 @@ function requests.get(page)
         getNetworkComponent()
         return nil
     end
-    local response = inet.request(page)
+    local response = internet.request(page)
     local body = ""
     for chunk in response do
       body = body .. chunk
