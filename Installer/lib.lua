@@ -16,7 +16,7 @@ function install_lib.check()
     local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", proxy))
 
     local branch = config.branch
-    screen.status("Installer is being downloaded.")
+    screen.status("Installer is being downloaded.", 0x00FF00)
 
     -- Install the full installer
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/install_lib.lua", "/lib/install_lib.lua")
