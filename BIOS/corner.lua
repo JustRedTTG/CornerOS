@@ -10,7 +10,6 @@ function getComponentAddressSafe(name)
 end
 local EEPROMAddress = getComponentAddress("eeprom")
 
--- Get Ready ~
 ---@diagnostic disable-next-line: lowercase-global
 filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
 
