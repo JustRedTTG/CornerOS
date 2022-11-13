@@ -14,6 +14,10 @@ function filesystem.getRoot()
     return component.proxy(component.invoke(EEPROMAddress, "getData"))
 end
 
+function filesystem.path(path)
+	return path:match("^(.+%/).") or ""
+end
+
 filesystem.root = filesystem.getRoot()
 
 
