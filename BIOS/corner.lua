@@ -1,9 +1,9 @@
-component = component
-computer = computer
-unicode = unicode
-
-local function getComponentAddress(name)
-	return component.list(name)() or error("Required " .. name .. " component is missing")
+local component = component
+local computer = computer
+local unicode = unicode
+local errorfun = error
+function getComponentAddress(name)
+	return component.list(name)() or errorfun("Required " .. name .. " component is missing")
 end
 function getComponentAddressSafe(name)
 	return component.list(name)() or nil
@@ -26,17 +26,13 @@ local addr, invoke = computer.getBootAddress(), component.invoke
     return load(buffer, "=" .. file, "bt", _G)
   end
 end
-local function filesystemPath(path)
-	return path:match("^(.+%/).") or ""
-end
-
 package = {loading = {}, loaded = {}}
 
 function require(module)
 	if package.loaded[module] then
 		return package.loaded[module]
 	elseif package.loading[module] then
-		error("already loading " .. module .. ": " .. debug.traceback())
+		errorfun("already loading " .. module .. ": " .. debug.traceback())
 	else
 		package.loading[module] = true
 
@@ -54,10 +50,10 @@ function require(module)
 			if result then
 				package.loaded[module] = result() or true
 			else
-				error(reason)
+				errorfun(reason)
 			end
 		else
-			error("Fail opening module: " .. tostring(module))
+			errorfun("fail opening module: " .. tostring(module))
 		end
 
 		package.loading[module] = nil
@@ -65,10 +61,7 @@ function require(module)
 		return package.loaded[module]
 	end
 end
-local error = require("/corner2.lua")
-function getComponentAddress(name)
-	return component.list(name)() or error.mild("Required " .. name .. " component is missing")
-end
+errorfun = require("/lib/error.lua").major
 local corner = require("/corner2.lua")
 local install_lib = require("/lib/install_lib.lua")
 install_lib.check()
