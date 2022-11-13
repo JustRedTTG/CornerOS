@@ -26,10 +26,14 @@ local function error(message)
 	component_invoke(gpu, "setBackground", 0x180d21)
 	component_invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
 	component_invoke(gpu, "set", 4, 2, "Corner OS EFI.")
+	component.invoke(gpu, "set", 4, screenHeight, "Press any key.")
+	component.invoke(gpu, "set", screenWidth * .5 - 11, screenHeight * .5 -1, "Sorry to interrupt  :(")
+	component.invoke(gpu, "set", screenWidth * .5 - #message * .5, screenHeight * .5, message)
 	
 	while computer.pullSignal() ~= "key_down" do
 		
 	end
+	computer.shutdown()
 end
 
 

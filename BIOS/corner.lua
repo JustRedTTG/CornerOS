@@ -5,14 +5,10 @@ unicode = unicode
 local function getComponentAddress(name)
 	return component.list(name)() or error("Required " .. name .. " component is missing")
 end
-local function getComponentAddressSafe(name)
+function getComponentAddressSafe(name)
 	return component.list(name)() or nil
 end
-
-local EEPROMAddress, internetAddress, gpuAddress = 
-	getComponentAddress("eeprom"),
-	getComponentAddressSafe("internet"),
-	getComponentAddress("gpu")
+local EEPROMAddress = getComponentAddress("eeprom")
 
 -- Get Ready ~
 ---@diagnostic disable-next-line: lowercase-global
@@ -70,8 +66,11 @@ function require(module)
 		return package.loaded[module]
 	end
 end
+local error = require("/corner2.lua")
+function getComponentAddress(name)
+	return component.list(name)() or error.mild("Required " .. name .. " component is missing")
+end
 local corner = require("/corner2.lua")
 local install_lib = require("/files/install_lib.lua")
 install_lib.check()
 corner.load()
-computer.shutdown()
