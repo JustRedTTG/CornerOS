@@ -1,4 +1,4 @@
-local computer
+local computer = computer
 
 local error = require("/lib/error.lua")
 
