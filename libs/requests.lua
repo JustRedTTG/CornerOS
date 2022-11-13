@@ -32,13 +32,11 @@ function requests.get(page)
 end
 
 function requests.download(page, path, fileProxy)
-    fileProxy.makeDirectory(path)
+    fileProxy.makeDirectory(path))
 
-	local fileHandle, reason = fileProxy.open(page, "wb")
+	local fileHandle, reason = fileProxy.open(path, "wb")
 	if fileHandle then
-		rawRequest(url, function(chunk)
-			fileProxy.write(fileHandle, chunk)
-		end)
+		fileProxy.write(fileHandle, requests.get(page))
 
 		fileProxy.close(fileHandle)
 	else
