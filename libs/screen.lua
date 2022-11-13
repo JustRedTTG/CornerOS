@@ -3,6 +3,8 @@ local error = require("/lib/error.lua")
 local screen = {}
 local gpuAddress = getComponentAddress("gpu")
 
+local screenWidth, screenHeight = component.invoke(gpuAddress, "getResolution")
+
 function screen.box(color, color2, color3, x, y, sizeX, sizeY, config)
 	component.invoke(gpuAddress, "setBackground", color)
 	component.invoke(gpuAddress, "setForeground", color2)
