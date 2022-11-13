@@ -3,17 +3,10 @@ local component = component
 local error = require('/lib/error.lua')
 local requests = {}
 
-local internet = getComponentAddressSafe('internet')
-
-if not internet == nil then
-    internet = component.get(internet)
-end
+local internet = component.get('internet')
 
 local function getNetworkComponent()
-    internet = getComponentAddressSafe('internet')
-    if not internet == nil then
-        internet = component.get(internet)
-    end
+    internet = component.get('internet')
 end
 
 
@@ -36,7 +29,12 @@ function requests.download(page, path, fileProxy)
 
 	local fileHandle, reason = fileProxy.open(path, "wb")
 	if fileHandle then
-		fileProxy.write(fileHandle, requests.get(page))
+        local data = requests.get(page)
+        if data then
+		    fileProxy.write(fileHandle, data)
+        else
+            error.mild("Got no data from requests.get(page)")
+        end
 
 		fileProxy.close(fileHandle)
 	else
