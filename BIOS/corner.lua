@@ -8,9 +8,11 @@ end
 function getComponentAddressSafe(name)
 	return component.list(name)() or nil
 end
+function getComponent(addr)
+  return component.proxy(addr) or nil
+end
 local EEPROMAddress = getComponentAddress("eeprom")
 
----@diagnostic disable-next-line: lowercase-global
 filesystemProxy = component.proxy(component.invoke(EEPROMAddress, "getData"))
 
 do
