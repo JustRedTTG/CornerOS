@@ -42,4 +42,17 @@ function filelib.write_file_text(file, data, proxy)
 	end
 end
 
+function filelib.copy(old, new, proxy)
+	proxy.copy(old, new)
+end
+
+function filelib.remove(file, proxy)
+	proxy.remove(file)
+end
+
+function filelib.move(old, new, proxy)
+	filelib.copy(old, new, proxy)
+	filelib.remove(old)
+end
+
 return filelib
