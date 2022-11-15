@@ -1,5 +1,3 @@
-local computer = computer
-local component = component
 local error = require('/lib/error.lua')
 local filesystem = require('/lib/filesystem.lua')
 local requests = {}
