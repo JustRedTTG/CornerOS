@@ -18,16 +18,12 @@ function error.screen(message, interupt_message)
 	gpu.fill(1, 1, screenWidth, screenHeight, " ")
 	gpu.set(4, 2, "Corner OS error screen.")
 	gpu.set(4, screenHeight-1, "Press any key.")
-	if interupt_message then
-		gpu.set(screenWidth * .5 - 11 , screenHeight * .5 -1, "Sorry to interrupt  :(")
-	else
-		gpu.set(screenWidth * .5 - #interupt_message * .5 , screenHeight * .5 -1, interupt_message)
-	end
+	gpu.set(screenWidth * .5 - #interupt_message * .5 , screenHeight * .5 -1, interupt_message)
 	gpu.set(screenWidth * .5 - #message * .5, screenHeight * .5, message)
 end
 
 function error.mild(message, custom_error_message)
-	error.screen(message, custom_error_message)
+	error.screen(message, custom_error_message or "Sorry to interrupt  :(")
 	error.beep()
 	while computer.pullSignal() ~= "key_down" do
 		
