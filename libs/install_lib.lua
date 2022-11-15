@@ -15,7 +15,7 @@ local url = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/"
 local installerDir = "Installer/"
 
 function install_lib.update(update_config, location)
-    local installDir = location or ""
+    local installDir = location or "/"
     local branch = update_config.branch
     requests.download(url..branch.."/full_config.cfg", "/config.cfg", proxy)
     local config = config_loader.from_text(filelib.load_file_text("/config.cfg", proxy))
