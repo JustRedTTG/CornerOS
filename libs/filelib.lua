@@ -1,5 +1,5 @@
 local error = require("/lib/error.lua")
-
+local filesystem = require("/lib/filesystem.lua")
 local filelib = {}
 
 function filelib.load_file_text(file, proxy)
@@ -28,9 +28,10 @@ function filelib.load_file_text(file, proxy)
 end
 
 function filelib.write_file_text(file, data, proxy)
+	fileProxy.makeDirectory(filesystem.path(path))
 	if not proxy then
-		error.mild("File Lib, proxy error")
-		return ''
+		error.mild("filelib, proxy is nil")
+		return nil
 	end
 	local handle, reason = proxy.open(file, "w")
 	if handle then
