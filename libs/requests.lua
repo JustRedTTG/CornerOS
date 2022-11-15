@@ -66,7 +66,7 @@ end
 function requests.download(page, path, fileProxy)
     fileProxy.makeDirectory(filesystem.path(path))
 
-    local data = requests.get(page)
+    local data = requests.request(page)
     if type(data) == nil or data == "" then
         error.mild("Got no data from requests.get(page)")
         return nil
