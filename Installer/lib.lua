@@ -29,6 +29,7 @@ function install_lib.check()
     -- Install the full installer
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/config_loader.lua", "/lib/config_loader.lua", proxy)
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/install_lib.lua", "/lib/install_lib.lua", proxy)
+    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/screen.lua", "/lib/screen.lua", proxy)
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/full_config.cfg", "/config.cfg", proxy)
 
     computer.shutdown(true)
