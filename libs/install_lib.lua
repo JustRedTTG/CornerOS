@@ -13,8 +13,7 @@ local proxy = filesystem.getRoot()
 local install_lib = {}
 local url = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/"
 
-function install_lib.update(update_config, location)
-    local installDir = location or ""
+function install_lib.update(update_config, installDir)
     local branch = update_config.branch
     requests.download(url..branch.."/full_config.cfg", "/config.cfg", proxy)
     local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", proxy))
@@ -101,7 +100,7 @@ end
 function install_lib.check()
     local update_config = config_loader.from_text(filelib.load_file_text("/files/update.cfg", proxy))
     if update_config.update == 1 then
-        install_lib.update(update_config)
+        install_lib.update(update_config, "")
     end
 end
 
