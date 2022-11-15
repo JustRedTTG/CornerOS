@@ -12,7 +12,7 @@ local proxy = filesystem.getRoot()
 
 local install_lib = {}
 local url = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/"
-local installerDir = "Installer"
+local installerDir = "Installer/"
 
 function install_lib.update(update_config, location)
     local installDir = location or ""
