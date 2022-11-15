@@ -43,7 +43,20 @@ function filelib.write_file_text(file, data, proxy)
 end
 
 function filelib.copy(old, new, proxy)
-	proxy.copy(old, new)
+	proxy.makeDirectory(filesystem.path(new))
+
+	local fileHandle, reason1 = proxy.open(old, "rb")
+	local fileHandle2, reason2 = proxy.open(new, "wb")
+	local chunk = ""
+	if fileHandle and fileHandle2 then
+		chunk = filesystemProxy.read(fileHandle, math.huge)
+		filesystemProxy.write(fileHandle2, chunk or "")
+
+		filesystemProxy.close(fileHandle)
+		filesystemProxy.close(fileHandle2)
+	else
+		error.mild(tostring(reason) .. " ; " .. tostring(reason2), "File opening failed")
+	end
 end
 
 function filelib.remove(file, proxy)
