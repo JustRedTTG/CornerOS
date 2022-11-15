@@ -27,7 +27,7 @@ function install_lib.update(update_config)
 
     config.update = 0
 
-    filelib.save_file_text(config_loader.to_text(config))
+    filelib.write_file_text(config_loader.to_text(config))
 
     computer.shutdown(true)
 end
