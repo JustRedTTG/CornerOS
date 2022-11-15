@@ -28,7 +28,7 @@ function filelib.load_file_text(file, proxy)
 end
 
 function filelib.write_file_text(file, data, proxy)
-	fileProxy.makeDirectory(filesystem.path(path))
+	proxy.makeDirectory(filesystem.path(path))
 	if not proxy then
 		error.mild("filelib, proxy is nil")
 		return nil
