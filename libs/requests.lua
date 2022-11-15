@@ -4,12 +4,18 @@ local error = require('/lib/error.lua')
 local filesystem = require('/lib/filesystem.lua')
 local requests = {}
 
-local internet = getComponentAddressSafe('internet')
+local internetAddr = nil
+local internet = nil
 
 local function getNetworkComponent()
-    getComponentAddressSafe('internet')
+    internetAddr = getComponentAddressSafe('internet')
+    if internetAddr == nil then
+      return nil
+    end
+    internet = getComponent(internetAddr)
 end
 
+getNetworkComponent()
 
 function requests.get(page)
     if internet == nil then
@@ -19,7 +25,7 @@ function requests.get(page)
             return nil
         end
     end
-    local response = component.invoke(internet, 'request', page)
+    local response = internet.request(page)
     local body = ""
     for chunk in response do
       body = body .. chunk
