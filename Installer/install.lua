@@ -45,7 +45,7 @@ end
 
 -- Internet
 local config
-local repositoryBranch = "debug"
+local repositoryBranch = "debug-component-changes"
 local repositoryURL = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..repositoryBranch.."/"
 local installerURL = "Installer/"
 
