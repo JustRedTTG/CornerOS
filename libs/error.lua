@@ -1,7 +1,7 @@
 local component = component
 local computer = computer
 
-local gpu = component.list("gpu")() or error("Couldn't get GPU address in error.lua.")
+local gpu = component.proxy(component.list("gpu")()) or error("Couldn't get GPU address in error.lua.")
 
 local error = {}
 
@@ -12,14 +12,14 @@ function error.beep()
 end
 
 function error.screen(message)
-	local screenWidth, screenHeight = component.invoke(gpu, "getResolution")
-	component.invoke(gpu, "setBackground", 0x180d21)
-	component.invoke(gpu, "setForeground", 0xFFFFFF)
-	component.invoke(gpu, "fill", 1, 1, screenWidth, screenHeight, " ")
-	component.invoke(gpu, "set", 4, 2, "Corner OS error screen.")
-	component.invoke(gpu, "set", 4, screenHeight-1, "Press any key.")
-	component.invoke(gpu, "set", screenWidth * .5 - 11, screenHeight * .5 -1, "Sorry to interrupt  :(")
-	component.invoke(gpu, "set", screenWidth * .5 - #message * .5, screenHeight * .5, message)
+	local screenWidth, screenHeight = gpu.getResolution()
+	gpu.setBackground(0x180d21)
+	gpu.setForeground(0xFFFFFF)
+	gpu.fill(1, 1, screenWidth, screenHeight, " ")
+	gpu.set(4, 2, "Corner OS error screen.")
+	gpu.set(4, screenHeight-1, "Press any key.")
+	gpu.set(screenWidth * .5 - 11, screenHeight * .5 -1, "Sorry to interrupt  :(")
+	gpu.set(screenWidth * .5 - #message * .5, screenHeight * .5, message)
 end
 
 function error.mild(message)
