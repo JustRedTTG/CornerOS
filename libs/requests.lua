@@ -17,20 +17,50 @@ end
 
 getNetworkComponent()
 
-function requests.get(page)
-    if internet == nil then
+local function rawRequest(page, postData, headers, chunkHandler, chunkSize, method)
+	if internet == nil then
         getNetworkComponent()
         if internet == nil then
             error.mild("Can't complete GET request, no internet component")
             return nil
         end
     end
-    local response = internet.request(page)
-    local body = ""
-    for chunk in response do
-      body = body .. chunk
+	local requestHandle, requestReason = internet.request(page, postData, headers, method)
+	if requestHandle then
+        while true do
+            local chunk, reason = requestHandle.read(chunkSize or math.huge)
+
+            if chunk then
+                chunkHandler(chunk)
+            else
+                requestHandle:close()
+                
+                if reason then
+                    return false, reason
+                else
+                    return true
+                end
+            end
+        end
+    else
+        error.mild(requestReason or "Invalid URL-address")
+        return nil
     end
-    return body
+end
+
+function requests.request(page, postData, headers, mothod)
+    local body = ""
+	rawRequest(
+		page,
+		postData,
+		headers,
+		function(chunk)
+			body = body .. chunk
+		end,
+		method
+	)
+
+	return body
 end
 
 function requests.download(page, path, fileProxy)
