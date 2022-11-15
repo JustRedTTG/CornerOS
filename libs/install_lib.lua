@@ -27,7 +27,7 @@ function install_lib.update(update_config)
 
     config.update = 0
 
-    filelib.write_file_text("/files/update.cfg", config_loader.to_text(config), proxy)
+    filelib.write_file_text("/files/update.cfg", config_loader.to_text(update_config), proxy)
 
     computer.shutdown(true)
 end
