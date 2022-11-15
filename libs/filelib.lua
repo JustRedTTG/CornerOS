@@ -35,7 +35,8 @@ function filelib.write_file_text(file, data, proxy)
 	end
 	local handle, reason = proxy.open(file, "w")
 	if handle then
-		handle.write(data)
+		proxy.seek(handle, 0)
+		proxy.write(handle, data)
 		proxy.close(handle)
 	else
 		error.major("File opening failed: " .. tostring(reason))
