@@ -18,7 +18,7 @@ function error.screen(message, interupt_message)
 	gpu.fill(1, 1, screenWidth, screenHeight, " ")
 	gpu.set(4, 2, "Corner OS error screen.")
 	gpu.set(4, screenHeight-1, "Press any key.")
-	gpu.set(screenWidth * .5 - (#interupt_message or 11), screenHeight * .5 -1, interupt_message or "Sorry to interrupt  :(")
+	gpu.set(screenWidth * .5 - (#interupt_message or 22) * .5 , screenHeight * .5 -1, interupt_message or "Sorry to interrupt  :(")
 	gpu.set(screenWidth * .5 - #message * .5, screenHeight * .5, message)
 end
 
