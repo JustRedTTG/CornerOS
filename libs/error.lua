@@ -11,27 +11,31 @@ function error.beep()
 	end
 end
 
-function error.screen(message)
+function error.screen(message, interupt_message)
 	local screenWidth, screenHeight = gpu.getResolution()
 	gpu.setBackground(0x180d21)
 	gpu.setForeground(0xFFFFFF)
 	gpu.fill(1, 1, screenWidth, screenHeight, " ")
 	gpu.set(4, 2, "Corner OS error screen.")
 	gpu.set(4, screenHeight-1, "Press any key.")
-	gpu.set(screenWidth * .5 - 11, screenHeight * .5 -1, "Sorry to interrupt  :(")
+	gpu.set(screenWidth * .5 - (#interupt_message or 11), screenHeight * .5 -1, interupt_message or "Sorry to interrupt  :(")
 	gpu.set(screenWidth * .5 - #message * .5, screenHeight * .5, message)
 end
 
-function error.mild(message)
-	error.screen(message)
+function error.mild(message, custom_error_message)
+	error.screen(message, custom_error_message)
 	error.beep()
 	while computer.pullSignal() ~= "key_down" do
 		
 	end
 end
 
+function error.okay(message)
+	return error.mild(message, "Everything is good :)")
+end
+
 function error.major(message)
-	error.screen(message)
+	error.screen(message, "Unrecoverable error :(")
 	error.beep()
 	while computer.pullSignal() ~= "key_down" do
 		computer.shutdown()

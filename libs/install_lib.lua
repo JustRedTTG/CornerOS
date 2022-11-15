@@ -12,10 +12,10 @@ local proxy = filesystem.getRoot()
 
 local install_lib = {}
 
-function install_lib.update()
+function install_lib.update(update_config)
+    local branch = update_config.branch
+    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/full_config.cfg", "/config.cfg", proxy)
     local config = config_loader.from_text(filelib.load_file_text("/files/config.cfg", proxy))
-
-    branch = config.branch
 
     screen.background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
     screen.progress(0, config)
@@ -23,14 +23,17 @@ function install_lib.update()
 
     -- Install files
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/install_lib.lua", "/lib/install_lib.lua", proxy)
-    requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/full_config.cfg", "/config.cfg", proxy)
-    error.mild("Everything is good!")
+    error.okay("Everything is good!")
+
+
+
     computer.shutdown(true)
 end
 
 function install_lib.check()
-    if tostring(filelib.load_file_text("/files/update.txt", proxy)) == 'true' then
-        install_lib.update()
+    local update_config = config_loader.from_text(filelib.load_file_text("/files/update.cfg", proxy))
+    if update_config.update == 1 then
+        install_lib.update(update_config)
     end
 end
 

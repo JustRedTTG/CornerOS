@@ -12,4 +12,13 @@ function config_loader.from_text(text)
 	end
 end
 
+function config_loader.to_text(config)
+	local result, reason = load("return " .. config, "=table")
+	if result then
+		return tostring(result())
+	else
+		error.major(reason)
+	end
+end
+
 return config_loader
