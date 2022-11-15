@@ -25,7 +25,9 @@ function install_lib.update(update_config)
     requests.download("https://raw.githubusercontent.com/JustRedTTG/CornerOS/"..branch.."/libs/install_lib.lua", "/lib/install_lib.lua", proxy)
     error.okay("Everything is good!")
 
+    config.update = 0
 
+    filelib.save_file_text(config_loader.to_text(config))
 
     computer.shutdown(true)
 end
