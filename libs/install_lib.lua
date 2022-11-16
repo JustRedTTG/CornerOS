@@ -65,29 +65,30 @@ function install_lib.update(update_config, location)
 
     -- Install required libs
     for i = 1, #config.install_required_libs do
-        screen.progress(currentI+i / totalI, config)
+        screen.progress(currentI / totalI, config)
         filelib.copy(installerDir .. "/lib/" .. config.install_required_libs[i], installDir .. "/lib/" .. config.install_required_libs[i], proxy)
+        currentI = currentI + 1
     end
-    currentI = currentI + #config.install_required_libs
 
     -- Install libs
     for i = 1, #config.libs do
-        screen.progress(currentI+i / totalI, config)
+        screen.progress(currentI / totalI, config)
         filelib.copy(installerDir .. "/lib/" .. config.libs[i], installDir .. "/lib/" .. config.libs[i], proxy)
+        currentI = currentI + 1
     end
-    currentI = currentI + #config.libs
 
     -- Install bios/boot
     for i = 1, #config.bios do
-        screen.progress(currentI+i / totalI, config)
+        screen.progress(currentI / totalI, config)
         filelib.copy(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i], proxy)
+        currentI = currentI + 1
     end
-    currentI = currentI + #config.bios
 
     -- Install files
     for i = 1, #config.files do
-        screen.progress(currentI+i / totalI, config)
+        screen.progress(currentI / totalI, config)
         filelib.copy(installerDir .. "/files/" .. config.files_names[i], installDir .. config.files_names[i], proxy)
+        currentI = currentI + 1
     end
     
 
