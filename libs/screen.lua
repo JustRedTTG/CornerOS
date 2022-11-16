@@ -38,7 +38,7 @@ function screen.centerText(y, color, text)
 	gpu.set(screen.centerOf(#text), y, text)
 end
 function screen.centeredBox(color, color2, color3, w, h, config)
-	local x, y = screen.screenWidth - w * .5, screen.screenHeight - h * .5
+	local x, y = screen.screenWidth * .5 - w * .5, screen.screenHeight * .5 - h * .5
 	screen.box(color, color2, color3, x, y, w, h, config)
 	gpu.fill(x+1, y+1, w-2, h-2, " ")
 end
