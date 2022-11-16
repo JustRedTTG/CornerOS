@@ -15,7 +15,7 @@ local filesystemProxy
 
 function corner.import()
     screen = require("/lib/screen.lua")
-    config_loader = require("/lib/screen.lua")
+    config_loader = require("/lib/config_loader.lua")
     filelib = require("/lib/filelib.lua")
     filesystem = require("/lib/filesystem.lua")
 end
