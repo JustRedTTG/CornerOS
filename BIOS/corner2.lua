@@ -28,7 +28,8 @@ end
 function corner.load()
     corner.import()
     corner.setup()
-    screen.box(0x000000, 0xFFFFFF, 0xFF0000, 2, 2, 10, 5, config)
+    screen.background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
+    screen.centeredBox(config.mainColors.guiLower, config.mainColors.guiUpper, config.mainColors.guiMidrange, screen.screenWidth * .5, screen.screenHeight * .5, config)
     while computer.pullSignal() do
         
     end
