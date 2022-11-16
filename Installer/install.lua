@@ -107,11 +107,16 @@ local function copy_file(from, to)
 	local fileHandle2, reason2 = filesystemProxy.open(to, "wb")
 	local chunk = ""
 	if fileHandle and fileHandle2 then
-		chunk = filesystemProxy.read(fileHandle, math.huge)
-		filesystemProxy.write(fileHandle2, chunk or "")
-
-		filesystemProxy.close(fileHandle)
-		filesystemProxy.close(fileHandle2)
+		while true do
+			chunk = filesystemProxy.read(fileHandle, math.huge)
+			if chunk then
+				filesystemProxy.write(fileHandle2, chunk)
+			else
+				filesystemProxy.close(fileHandle)
+				filesystemProxy.close(fileHandle2)
+				return
+			end
+		end
 	else
 		error("File opening failed: " .. tostring(reason) .. " ; " .. tostring(reason2))
 	end

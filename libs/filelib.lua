@@ -45,17 +45,22 @@ end
 function filelib.copy(old, new, proxy)
 	proxy.makeDirectory(filesystem.path(new))
 
-	local fileHandle, reason1 = proxy.open(old, "rb")
-	local fileHandle2, reason2 = proxy.open(new, "wb")
+	local fileHandle, reason1 = filesystemProxy.open(old, "rb")
+	local fileHandle2, reason2 = filesystemProxy.open(new, "wb")
 	local chunk = ""
 	if fileHandle and fileHandle2 then
-		chunk = filesystemProxy.read(fileHandle, math.huge)
-		filesystemProxy.write(fileHandle2, chunk or "")
-
-		filesystemProxy.close(fileHandle)
-		filesystemProxy.close(fileHandle2)
+		while true do
+			chunk = filesystemProxy.read(fileHandle, math.huge)
+			if chunk then
+				filesystemProxy.write(fileHandle2, chunk)
+			else
+				filesystemProxy.close(fileHandle)
+				filesystemProxy.close(fileHandle2)
+				return
+			end
+		end
 	else
-		error.mild(tostring(reason) .. " ; " .. tostring(reason2), "File opening failed")
+		error("File opening failed: " .. tostring(reason) .. " ; " .. tostring(reason2))
 	end
 end
 
