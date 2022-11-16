@@ -18,7 +18,7 @@ function install_lib.update(update_config, location)
     local installDir = location or "/"
     local branch = update_config.branch
     requests.download(url..branch.."/full_config.cfg", "/config.cfg", proxy)
-    local config = config_loader.from_text(filelib.load_file_text("/config.cfg", proxy))
+    local config = config_loader.from_text(filelib.read_file_text("/config.cfg", proxy))
 
     screen.background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
     screen.progress(0, config)
@@ -101,7 +101,7 @@ function install_lib.update(update_config, location)
 end
 
 function install_lib.check()
-    local update_config = config_loader.from_text(filelib.load_file_text("/files/update.cfg", proxy))
+    local update_config = config_loader.from_text(filelib.read_file_text("/files/update.cfg", proxy))
     if update_config.update == 1 then
         install_lib.update(update_config)
     end

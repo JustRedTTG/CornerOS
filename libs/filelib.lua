@@ -2,7 +2,7 @@ local error = require("/lib/error.lua")
 local filesystem = require("/lib/filesystem.lua")
 local filelib = {}
 
-function filelib.load_file_text(file, proxy)
+function filelib.read_file_text(file, proxy)
 	if not proxy then
 		error.mild("File Lib, proxy error")
 		return ''

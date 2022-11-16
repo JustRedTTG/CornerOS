@@ -22,7 +22,7 @@ local function from_text(text)
 end
 
 function install_lib.check()
-    local config = from_text(filelib.load_file_text("/files/update.cfg", proxy))
+    local config = from_text(filelib.read_file_text("/files/update.cfg", proxy))
 
     local branch = config.branch
     screen.status("Installer is being downloaded.", 0x00FF00)
