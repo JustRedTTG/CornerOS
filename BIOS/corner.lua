@@ -64,7 +64,7 @@ function require(module)
 	end
 end
 errorfun = require("/lib/error.lua").major
-local corner = require("/corner2.lua")
 local install_lib = require("/lib/install_lib.lua")
 install_lib.check()
+local corner = require("/corner2.lua")
 corner.load()
