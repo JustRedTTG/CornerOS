@@ -22,7 +22,7 @@ end
 
 function corner.setup()
     filesystemProxy = filesystem.getRoot()
-    config = config_loader(filelib.read_file_text("/config.cfg", filesystemProxy))
+    config = config_loader.from_text(filelib.read_file_text("/config.cfg", filesystemProxy))
 end
 
 function corner.load()
