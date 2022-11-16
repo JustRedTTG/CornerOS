@@ -28,7 +28,7 @@ end
 function corner.load()
     corner.import()
     corner.setup()
-    screen.box(0x000000, 0xFFFFFF, 0xFF0000, 2, 2, 5, 10, config)
+    screen.box(0x000000, 0xFFFFFF, 0xFF0000, 2, 2, 10, 5, config)
     while computer.pullSignal() do
         
     end
