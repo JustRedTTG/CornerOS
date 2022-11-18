@@ -14,11 +14,23 @@ local install_lib = {}
 local url = "https://raw.githubusercontent.com/JustRedTTG/CornerOS/"
 local installerDir = "Installer/"
 
+function install_lib.installer(update_config, location)
+    local installDir = location or "/"
+    local branch = update_config.branch
+    requests.download(url..branch.."/Installer/lib.lua", installDir.."lib/install_lib.lua", proxy)
+    
+    update_config.update = 1
+
+    filelib.write_file_text("/files/update.cfg", config_loader.to_text(update_config), proxy)
+
+    computer.shutdown(true)
+end
+
 function install_lib.update(update_config, location)
     local installDir = location or "/"
     local branch = update_config.branch
     requests.download(url..branch.."/full_config.cfg", "/config.cfg", proxy)
-    local config = config_loader.from_text(filelib.read_file_text("/config.cfg", proxy))
+    local config = config_loader.from_text(filelib.read_file_text(installDir.."config.cfg", proxy))
 
     screen.background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
     screen.progress(0, config)
@@ -93,9 +105,9 @@ function install_lib.update(update_config, location)
     
 
 
-    -- update_config.update = 0
+    update_config.update = 2
 
-    -- filelib.write_file_text("/files/update.cfg", config_loader.to_text(update_config), proxy)
+    filelib.write_file_text("/files/update.cfg", config_loader.to_text(update_config), proxy)
 
     -- computer.shutdown(true)
 end
@@ -104,6 +116,9 @@ function install_lib.check()
     local update_config = config_loader.from_text(filelib.read_file_text("/files/update.cfg", proxy))
     if update_config.update == 1 then
         install_lib.update(update_config)
+    end
+    if update_config.update == 2 then
+        install_lib.installer(update_config)
     end
 end
 
