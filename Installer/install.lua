@@ -118,7 +118,7 @@ local function copy_file(from, to)
 			end
 		end
 	else
-		error("File opening failed: " .. tostring(reason) .. " ; " .. tostring(reason2))
+		error("File opening failed: " .. tostring(reason) .. "-" .. from .. " ; " .. tostring(reason2) .. "-" .. to)
 	end
 end
 
