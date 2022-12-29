@@ -173,7 +173,7 @@ local function progress(p, config)
 end
 
 -- Begin Downloads
-local config = deserialize(request(repositoryURL .. "full_config.cfg"))
+local config = deserialize(request("full_config.cfg"))
 --
 local debug = false
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
