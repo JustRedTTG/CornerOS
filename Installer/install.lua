@@ -194,21 +194,21 @@ background(config.mainColors.background, config.mainColors.backgroundUpper, conf
 status("Downloading Libraries...", config.mainColors.text)
 for i = 1, #config.install_required_libs do
 	progress(i / #config.install_required_libs, config)
-	download("/libs/" .. config.install_required_libs[i], installerDir .. "/lib/" .. config.install_required_libs[i])
+	download("/libs/" .. config.install_required_libs[i], installerDir .. "lib/" .. config.install_required_libs[i])
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 status("Downloading Boot...", config.mainColors.text)
 for i = 1, #config.bios do
 	progress(i / #config.bios, config)
-	download("/BIOS/" .. config.bios[i], installerDir .. "/boot/" .. config.bios[i])
+	download("/BIOS/" .. config.bios[i], installerDir .. "boot/" .. config.bios[i])
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 status("Downloading Files...", config.mainColors.text)
 for i = 1, #config.files do
 	progress(i / #config.files, config)
-	download(config.files[i], installerDir .. "/files/" .. config.files_names[i])
+	download(config.files[i], installerDir .. "files/" .. config.files_names[i])
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
@@ -218,17 +218,17 @@ status("Copying files...", config.mainColors.text)
 
 for i = 1, #config.install_required_libs do
 	progress(i / #config.install_required_libs, config)
-	copy_file(installerDir .. "/lib/" .. config.install_required_libs[i], installDir .. "/lib/" .. config.install_required_libs[i])
+	copy_file(installerDir .. "lib/" .. config.install_required_libs[i], installDir .. "/lib/" .. config.install_required_libs[i])
 end
 
 for i = 1, #config.bios do
 	progress(i / #config.bios, config)
-	copy_file(installerDir .. "/boot/" .. config.bios[i], installDir .. config.bios[i])
+	copy_file(installerDir .. "boot/" .. config.bios[i], installDir .. config.bios[i])
 end
 for i = 1, #config.files do
 	progress(i / #config.files, config)
-	copy_file(installerDir .. "/files/" .. config.files_names[i], installDir .. "/files/" .. config.files_names[i])
+	copy_file(installerDir .. "files/" .. config.files_names[i], installDir .. "files/" .. config.files_names[i])
 end
-copy_file(installerDir .. "/files/install_lib.lua", installDir .. "/lib/install_lib.lua")
+copy_file(installerDir .. "files/install_lib.lua", installDir .. "lib/install_lib.lua")
 filesystemProxy.remove(installerDir)
 computer.shutdown(true)
