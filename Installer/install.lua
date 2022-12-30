@@ -213,7 +213,7 @@ end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 status("Downloading Install Library...", config.mainColors.text)
-progress(1)
+progress(1, config)
 download(repositoryURL .. installerURL .. "lib.lua", installerDir .. "lib/install_lib.lua")
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
