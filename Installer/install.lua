@@ -212,13 +212,18 @@ for i = 1, #config.files do
 end
 
 background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
+status("Downloading Install Library...", config.mainColors.text)
+progress(1)
+download(repositoryURL .. installerURL .. "lib.lua", installerDir .. "lib/install_lib.lua")
+
+background(config.mainColors.background, config.mainColors.backgroundUpper, config.mainColors.backgroundMidrange, config)
 status("Copying files...", config.mainColors.text)
 
 --filesystemProxy.remove(installDir .. "lib")
 
 for i = 1, #config.install_required_libs do
 	progress(i / #config.install_required_libs, config)
-	copy_file(installerDir .. "lib/" .. config.install_required_libs[i], installDir .. "/lib/" .. config.install_required_libs[i])
+	copy_file(installerDir .. "lib/" .. config.install_required_libs[i], installDir .. "lib/" .. config.install_required_libs[i])
 end
 
 for i = 1, #config.bios do
@@ -229,5 +234,8 @@ for i = 1, #config.files do
 	progress(i / #config.files, config)
 	copy_file(installerDir .. "files/" .. config.files_names[i], installDir .. "files/" .. config.files_names[i])
 end
+
+copy_file(installerDir .. "lib/install_lib.lua", installDir .. " lib/install_lib.lua")
+
 filesystemProxy.remove(installerDir)
 computer.shutdown(true)
